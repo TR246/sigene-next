@@ -1,13 +1,23 @@
 <template>
-    <v-app dark>
+    <v-app>
+        <!-- 左メニュー -->
         <v-navigation-drawer
-            :mini-variant="miniVariant"
-            :clipped="clipped"
             v-model="drawer"
             fixed
             app
         >
             <v-list>
+                <v-list-tile
+                    v-if="!isDesktop"
+                    exact
+                    @click="drawer = false">
+                    <v-list-tile-action>
+                        <v-icon>arrow_back</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>閉じる</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
                 <v-list-tile
                     v-for="(item, i) in items"
                     :to="item.to"
@@ -16,72 +26,67 @@
                     exact
                 >
                     <v-list-tile-action>
-                        <v-icon v-html="item.icon" />
+                        <v-icon>{{ item.icon }}</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title v-text="item.title" />
+                        <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
             </v-list>
         </v-navigation-drawer>
+
+        <!-- ヘッダー -->
         <v-toolbar
-            :clipped-left="clipped"
+            dark
+            color="primary"
             fixed
             app
         >
             <v-toolbar-side-icon @click="drawer = !drawer" />
-            <v-btn
-                icon
-                @click.stop="miniVariant = !miniVariant"
-            >
-                <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'" />
-            </v-btn>
-            <v-btn
-                icon
-                @click.stop="clipped = !clipped"
-            >
-                <v-icon>web</v-icon>
-            </v-btn>
-            <v-btn
-                icon
-                @click.stop="fixed = !fixed"
-            >
-                <v-icon>remove</v-icon>
-            </v-btn>
             <v-toolbar-title v-text="title"/>
+            <v-spacer/>
             <v-btn
                 icon
                 @click.stop="rightDrawer = !rightDrawer"
             >
-                <v-icon>menu</v-icon>
+                <v-icon>share</v-icon>
             </v-btn>
         </v-toolbar>
+
+        <!-- 内容 -->
         <v-content>
             <v-container>
                 <nuxt />
             </v-container>
         </v-content>
+
+        <!-- 右メニュー -->
         <v-navigation-drawer
-            :right="right"
+            :right="true"
             v-model="rightDrawer"
             temporary
             fixed
         >
             <v-list>
-                <v-list-tile @click.native="right = !right">
+                <v-list-tile
+                    v-if="!isDesktop"
+                    exact
+                    @click="rightDrawer = false">
                     <v-list-tile-action>
-                        <v-icon light>compare_arrows</v-icon>
+                        <v-icon>arrow_forward</v-icon>
                     </v-list-tile-action>
-                    <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
+                    <v-list-tile-content>
+                        <v-list-tile-title>閉じる</v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile>
+                    <v-list-tile-action>
+                        <v-icon light>share</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-title>共有</v-list-tile-title>
                 </v-list-tile>
             </v-list>
         </v-navigation-drawer>
-        <v-footer
-            :fixed="fixed"
-            app
-        >
-            <span>&copy; 2017</span>
-        </v-footer>
     </v-app>
 </template>
 
@@ -89,18 +94,19 @@
 export default {
     data() {
         return {
-            clipped: false,
             drawer: true,
-            fixed: false,
             items: [
                 { icon: "apps", title: "Welcome", to: "/" },
                 { icon: "bubble_chart", title: "Inspire", to: "/inspire" }
             ],
-            miniVariant: false,
-            right: true,
             rightDrawer: false,
-            title: "Vuetify.js"
+            title: "Singene Next"
         };
+    },
+    computed: {
+        isDesktop() {
+            return ["lg", "xl"].includes(this.$vuetify.breakpoint.name);
+        }
     }
 };
 </script>
