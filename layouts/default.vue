@@ -55,7 +55,7 @@
 
         <!-- 内容 -->
         <v-content>
-            <v-container>
+            <v-container grid-list-md>
                 <nuxt />
             </v-container>
         </v-content>

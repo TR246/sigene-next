@@ -1,12 +1,14 @@
 <template>
-    <v-layout>
+    <v-layout
+        row
+        wrap>
         <v-flex
             xs12
-            md6>
+            sm6>
             <v-card
                 nuxt
                 ripple
-                to="/inspire">
+                to="/generator-jre">
                 <v-img
                     :aspect-ratio="19 / 6"
                     src="~/assets/sign_jre.png"/>
