@@ -76,6 +76,7 @@ module.exports = {
                     exclude: /(node_modules)/
                 });
             }
+            ctx.loaders.vue.transformAssetUrls["v-img"] = ["src", "lazy-src"];
         }
     }
 };
