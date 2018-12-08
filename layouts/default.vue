@@ -69,11 +69,10 @@
         >
             <v-list>
                 <v-list-tile
-                    class="hidden-lg-and-up"
                     exact
                     @click="rightDrawer = false">
                     <v-list-tile-action>
-                        <v-icon>arrow_forward</v-icon>
+                        <v-icon>close</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
                         <v-list-tile-title>閉じる</v-list-tile-title>
