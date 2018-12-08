@@ -8,7 +8,7 @@
         >
             <v-list>
                 <v-list-tile
-                    v-if="!isDesktop"
+                    class="hidden-lg-and-up"
                     exact
                     @click="drawer = false">
                     <v-list-tile-action>
@@ -69,7 +69,7 @@
         >
             <v-list>
                 <v-list-tile
-                    v-if="!isDesktop"
+                    class="hidden-lg-and-up"
                     exact
                     @click="rightDrawer = false">
                     <v-list-tile-action>
@@ -102,11 +102,6 @@ export default {
             rightDrawer: false,
             title: "Singene Next"
         };
-    },
-    computed: {
-        isDesktop() {
-            return ["lg", "xl"].includes(this.$vuetify.breakpoint.name);
-        }
     }
 };
 </script>
