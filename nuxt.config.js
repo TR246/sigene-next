@@ -33,17 +33,17 @@ module.exports = {
     /*
     ** Customize the progress-bar color
     */
-    loading: { color: "#fff" },
+    loading: { color: "#fafafa" },
 
     /*
     ** Global CSS
     */
-    css: ["~/assets/style/app.styl"],
+    css: ["~/assets/style/app.styl", "~/assets/style/main.scss"],
 
     /*
     ** Plugins to load before mounting the App
     */
-    plugins: ["@/plugins/vuetify"],
+    plugins: ["~/plugins/vuetify"],
 
     /*
     ** Nuxt.js modules

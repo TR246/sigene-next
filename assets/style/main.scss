@@ -1,0 +1,11 @@
+.page-enter-active {
+    transition: .2s ease-out;
+}
+.page-leave-active {
+    transition: .2s ease-in;
+}
+.page-enter,
+.page-leave-to {
+    transform: translateY(20px);
+    opacity: 0;
+}

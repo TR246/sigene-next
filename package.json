@@ -14,10 +14,12 @@
     "precommit": "npm run lint:fix"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.0.0",
     "cross-env": "^5.2.0",
+    "node-sass": "^4.10.0",
     "nuxt": "^2.0.0",
-    "vuetify": "^1.2.4",
-    "@nuxtjs/axios": "^5.0.0"
+    "sass-loader": "^7.1.0",
+    "vuetify": "^1.2.4"
   },
   "devDependencies": {
     "nodemon": "^1.11.0",
