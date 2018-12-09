@@ -10,6 +10,7 @@
                 <v-list-tile
                     class="hidden-lg-and-up"
                     exact
+                    ripple
                     @click="drawer = false">
                     <v-list-tile-action>
                         <v-icon>arrow_back</v-icon>
@@ -18,12 +19,15 @@
                         <v-list-tile-title>閉じる</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
+                <v-divider class="hidden-lg-and-up"/>
                 <v-list-tile
                     v-for="(item, i) in items"
                     :to="item.to"
                     :key="i"
                     router
+                    nuxt
                     exact
+                    ripple
                 >
                     <v-list-tile-action>
                         <v-icon>{{ item.icon }}</v-icon>
@@ -55,7 +59,7 @@
 
         <!-- 内容 -->
         <v-content>
-            <v-container grid-list-md>
+            <v-container grid-list-xl>
                 <nuxt />
             </v-container>
         </v-content>
@@ -70,6 +74,7 @@
             <v-list>
                 <v-list-tile
                     exact
+                    ripple
                     @click="rightDrawer = false">
                     <v-list-tile-action>
                         <v-icon>close</v-icon>
@@ -78,7 +83,7 @@
                         <v-list-tile-title>閉じる</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-tile>
+                <v-list-tile ripple>
                     <v-list-tile-action>
                         <v-icon light>share</v-icon>
                     </v-list-tile-action>
@@ -95,8 +100,8 @@ export default {
         return {
             drawer: true,
             items: [
-                { icon: "apps", title: "Welcome", to: "/" },
-                { icon: "bubble_chart", title: "Inspire", to: "/inspire" }
+                { icon: "apps", title: "駅名標選択", to: "/" },
+                { icon: "", title: "JR東日本風", to: "/generator-jre" }
             ],
             rightDrawer: false,
             title: "Singene Next"
