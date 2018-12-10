@@ -42,7 +42,7 @@
         <!-- ヘッダー -->
         <v-toolbar
             dark
-            color="primary"
+            color="secondary"
             fixed
             app
         >
@@ -101,7 +101,7 @@ export default {
             drawer: true,
             items: [
                 { icon: "apps", title: "駅名標選択", to: "/" },
-                { icon: "", title: "JR東日本風", to: "/generator-jre" }
+                { icon: "", title: "JR東日本風", to: "/generator-jreast" }
             ],
             rightDrawer: false,
             title: "Singene Next"

@@ -8,9 +8,7 @@
                 nuxt
                 ripple
                 to="/generator-jre">
-                <v-img
-                    :aspect-ratio="19 / 6"
-                    src="~/assets/sign_jre.png"/>
+                <v-img src="~/assets/sign_jre.png"/>
                 <v-card-title primary-title>
                     <h2>JR東日本<small>風</small></h2>
                 </v-card-title>
