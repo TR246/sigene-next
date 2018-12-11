@@ -5,8 +5,7 @@ export const state = () => ({
         height: 600,
         padding: 35,
         "se-led": {
-            preset: null,
-            padding: 35
+            lighting: true
         },
         "b-fl": {},
         "non-light": {}

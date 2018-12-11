@@ -49,8 +49,9 @@
                                 max="600"
                                 @input="change('height', $event)"/>
                         </v-flex>
-                        <!-- 筐体左右余白 SE型のみ -->
+                        <!-- SE型のみ -->
                         <template v-if="type === 'se-led'">
+                            <!-- 筐体左右余白 -->
                             <v-flex xs10>
                                 <v-slider
                                     :value="housing.padding"
@@ -67,7 +68,7 @@
                                     max="40"
                                     @input="change('padding', $event)"/>
                             </v-flex>
-                            <!-- SE型 プリセット -->
+                            <!-- プリセット -->
                             <v-flex xs7>
                                 <v-select
                                     :items="housingPresetsSE"
@@ -81,6 +82,14 @@
                                     @click="applyPreset">
                                     プリセットを適用
                                 </v-btn>
+                            </v-flex>
+                            <!-- LED点灯の有無 -->
+                            <v-flex xs12>
+                                <v-switch
+                                    :value="housing['se-led'].lighting"
+                                    color="primary"
+                                    label="LED点灯"
+                                    @change="change('se-led.lighting', $event)"/>
                             </v-flex>
                         </template>
                     </v-layout>
