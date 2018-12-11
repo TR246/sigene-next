@@ -58,11 +58,7 @@
         </v-toolbar>
 
         <!-- 内容 -->
-        <v-content>
-            <v-container grid-list-xl>
-                <nuxt />
-            </v-container>
-        </v-content>
+        <nuxt/>
 
         <!-- 右メニュー -->
         <v-navigation-drawer
