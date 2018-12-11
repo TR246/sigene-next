@@ -3,6 +3,7 @@ export const state = () => ({
         type: "se-led",
         width: 1900,
         height: 600,
+        padding: 35,
         "se-led": {
             preset: null,
             padding: 35

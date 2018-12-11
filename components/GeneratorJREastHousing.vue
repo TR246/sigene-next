@@ -4,21 +4,88 @@
             <h2>筐体設定</h2>
         </v-card-title>
         <v-card-text>
-            <v-layout wrap>
-                <v-flex xs12>
-                    <v-select
-                        :items="housingTypes"
-                        :value="housing.type"
-                        @change="change('type', $event)"/>
-                </v-flex>
-                <v-flex xs12>
-                    <v-window v-model="housing.type">
-                        <v-window-item value="se-led">SE</v-window-item>
-                        <v-window-item value="b-fl">B</v-window-item>
-                        <v-window-item value="non-light">非電照</v-window-item>
-                    </v-window>
-                </v-flex>
-            </v-layout>
+            <v-select
+                :items="housingTypes"
+                :value="housing.type"
+                label="筐体タイプ"
+                @change="change('type', $event)"/>
+            <v-window v-model="housing.type">
+                <v-window-item
+                    v-for="{value: type} in housingTypes"
+                    :key="type"
+                    :value="type">
+                    <v-layout wrap>
+                        <!-- 筐体幅 -->
+                        <v-flex xs10>
+                            <v-slider
+                                :value="housing.width"
+                                label="筐体幅(mm)"
+                                min="680"
+                                max="4900"
+                                @input="change('width', $event)"/>
+                        </v-flex>
+                        <v-flex xs2>
+                            <v-text-field
+                                :value="housing.width"
+                                type="number"
+                                min="680"
+                                max="4900"
+                                @input="change('width', $event)"/>
+                        </v-flex>
+                        <!-- 筐体高 -->
+                        <v-flex xs10>
+                            <v-slider
+                                :value="housing.height"
+                                label="筐体高(mm)"
+                                min="450"
+                                max="600"
+                                @input="change('height', $event)"/>
+                        </v-flex>
+                        <v-flex xs2>
+                            <v-text-field
+                                :value="housing.height"
+                                type="number"
+                                min="450"
+                                max="600"
+                                @input="change('height', $event)"/>
+                        </v-flex>
+                        <!-- 筐体左右余白 SE型のみ -->
+                        <template v-if="type === 'se-led'">
+                            <v-flex xs10>
+                                <v-slider
+                                    :value="housing.padding"
+                                    label="筐体左右余白(mm)"
+                                    min="35"
+                                    max="40"
+                                    @input="change('padding', $event)"/>
+                            </v-flex>
+                            <v-flex xs2>
+                                <v-text-field
+                                    :value="housing.padding"
+                                    type="number"
+                                    min="35"
+                                    max="40"
+                                    @input="change('padding', $event)"/>
+                            </v-flex>
+                            <!-- SE型 プリセット -->
+                            <v-flex xs7>
+                                <v-select
+                                    :items="housingPresetsSE"
+                                    v-model="preset"
+                                    label="筐体プリセット"/>
+                            </v-flex>
+                            <v-flex xs5>
+                                <v-btn
+                                    color="primary"
+                                    flat
+                                    @click="applyPreset">
+                                    プリセットを適用
+                                </v-btn>
+                            </v-flex>
+                        </template>
+                    </v-layout>
+                </v-window-item>
+            </v-window>
         </v-card-text>
     </v-card>
 </template>
@@ -30,7 +97,8 @@ export default {
         housingTypes: [
             { text: "SE型(LED)", value: "se-led" },
             { text: "B型(蛍光灯)", value: "b-fl" },
-            { text: "非電照型", value: "non-light" }
+            { text: "非電照型", value: "non-light" },
+            { text: "枠なし", value: "none" }
         ],
         housingSizesSE: {
             "SE-1": { width: 680, height: 450, padding: 35 },
@@ -43,15 +111,16 @@ export default {
             "SE-8": { width: 3700, height: 600, padding: 40 }
         },
         housingPresetsSE: [
-            "SE-1",
-            "SE-2",
-            "SE-3",
-            "SE-4",
-            "SE-5",
-            "SE-6",
-            "SE-7",
-            "SE-8"
-        ]
+            { text: "SE-1型 (サイン用: 極小)", value: "SE-1" },
+            { text: "SE-2型 (サイン用: 小型)", value: "SE-2" },
+            { text: "SE-3型 (サイン用: 中型)", value: "SE-3" },
+            { text: "SE-4型 (サイン用: 大型)", value: "SE-4" },
+            { text: "SE-5型 (サイン用: 幅広)", value: "SE-5" },
+            { text: "SE-6型 (駅名標用: 通常)", value: "SE-6" },
+            { text: "SE-7型 (駅名標用: 幅広)", value: "SE-7" },
+            { text: "SE-8型 (サイン用: 特大)", value: "SE-8" }
+        ],
+        preset: "SE-6"
     }),
     computed: {
         housing() {
@@ -64,6 +133,12 @@ export default {
                 key: `housing.${key}`,
                 value
             });
+        },
+        applyPreset() {
+            const { width, height, padding } = this.housingSizesSE[this.preset];
+            this.change("width", width);
+            this.change("height", height);
+            this.change("padding", padding);
         }
     }
 };
