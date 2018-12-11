@@ -48,45 +48,10 @@
         >
             <v-toolbar-side-icon @click="drawer = !drawer" />
             <v-toolbar-title v-text="title"/>
-            <v-spacer/>
-            <v-btn
-                icon
-                @click.stop="rightDrawer = !rightDrawer"
-            >
-                <v-icon>share</v-icon>
-            </v-btn>
         </v-toolbar>
 
         <!-- 内容 -->
         <nuxt/>
-
-        <!-- 右メニュー -->
-        <v-navigation-drawer
-            :right="true"
-            v-model="rightDrawer"
-            temporary
-            fixed
-        >
-            <v-list>
-                <v-list-tile
-                    exact
-                    ripple
-                    @click="rightDrawer = false">
-                    <v-list-tile-action>
-                        <v-icon>close</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>閉じる</v-list-tile-title>
-                    </v-list-tile-content>
-                </v-list-tile>
-                <v-list-tile ripple>
-                    <v-list-tile-action>
-                        <v-icon light>share</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-title>共有</v-list-tile-title>
-                </v-list-tile>
-            </v-list>
-        </v-navigation-drawer>
     </v-app>
 </template>
 
@@ -99,7 +64,6 @@ export default {
                 { icon: "apps", title: "駅名標選択", to: "/" },
                 { icon: "", title: "JR東日本風", to: "/generator-jreast" }
             ],
-            rightDrawer: false,
             title: "Singene Next"
         };
     }
