@@ -1,7 +1,13 @@
 <template>
     <v-content class="content">
-        <div class="sign">
-            <img src="~/assets/sign_jre.png">
+        <div
+            v-scroll="onScroll"
+            :style="{
+                opacity: 1 - signInactiveLevel * 0.5,
+                transform: `scale(${1 - signInactiveLevel * 0.1})`
+            }"
+            class="sign">
+            <GeneratorJREastSign class="sign-media"/>
         </div>
         <div class="scroll">
             <v-container grid-list-xl>
@@ -20,12 +26,26 @@
 </template>
 
 <script>
+import GeneratorJREastSign from "~/components/GeneratorJREastSign.vue";
 import GeneratorJREastHousing from "~/components/GeneratorJREastHousing.vue";
 
 export default {
+    components: { GeneratorJREastSign },
     data: () => ({
+        scroll: 0,
         cards: [GeneratorJREastHousing]
-    })
+    }),
+    computed: {
+        signInactiveLevel() {
+            return Math.min(1, this.scroll / 300);
+        }
+    },
+    methods: {
+        onScroll() {
+            this.scroll =
+                window.pageYOffset || document.documentElement.scrollTop;
+        }
+    }
 };
 </script>
 
@@ -37,10 +57,11 @@ export default {
 }
 .sign {
     position: fixed;
+    width: 100%;
     height: 60vh;
-    padding: 40px;
+    padding: 24px;
 
-    & img {
+    & .sign-media {
         width: 100%;
         height: 100%;
         object-fit: contain;
