@@ -86,10 +86,12 @@
                             <!-- LED点灯の有無 -->
                             <v-flex xs12>
                                 <v-switch
-                                    :value="housing['se-led'].lighting"
+                                    :input-value="housing.lighting"
+                                    :true-value="true"
+                                    :false-value="false"
                                     color="primary"
                                     label="LED点灯"
-                                    @change="change('se-led.lighting', $event)"/>
+                                    @change="change('lighting', $event)"/>
                             </v-flex>
                         </template>
                     </v-layout>

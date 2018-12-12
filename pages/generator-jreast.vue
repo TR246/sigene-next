@@ -5,13 +5,20 @@
         </div>
         <div class="scroll">
             <v-container grid-list-xl>
-                <v-layout
-                    ref="layout"
-                    wrap>
+                <v-layout wrap>
                     <v-flex
                         xs12
                         md6>
                         <GeneratorJREastHousing/>
+                    </v-flex>
+                    <v-flex
+                        v-for="i in 10"
+                        :key="i"
+                        xs12
+                        md6>
+                        <v-card>
+                            <v-card-title>ほげ</v-card-title>
+                        </v-card>
                     </v-flex>
                 </v-layout>
             </v-container>

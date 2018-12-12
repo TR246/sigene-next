@@ -4,11 +4,7 @@ export const state = () => ({
         width: 1900,
         height: 600,
         padding: 35,
-        "se-led": {
-            lighting: true
-        },
-        "b-fl": {},
-        "non-light": {}
+        lighting: true
     }
 });
 
