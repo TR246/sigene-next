@@ -7,18 +7,11 @@
             <v-container grid-list-xl>
                 <v-layout wrap>
                     <v-flex
-                        xs12
-                        md6>
-                        <GeneratorJREastHousing/>
-                    </v-flex>
-                    <v-flex
-                        v-for="i in 10"
+                        v-for="(component, i) in cards"
                         :key="i"
                         xs12
                         md6>
-                        <v-card>
-                            <v-card-title>ほげ</v-card-title>
-                        </v-card>
+                        <component :is="component"/>
                     </v-flex>
                 </v-layout>
             </v-container>
@@ -30,7 +23,9 @@
 import GeneratorJREastHousing from "~/components/GeneratorJREastHousing.vue";
 
 export default {
-    components: { GeneratorJREastHousing }
+    data: () => ({
+        cards: [GeneratorJREastHousing]
+    })
 };
 </script>
 
