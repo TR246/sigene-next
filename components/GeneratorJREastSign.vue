@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import SVGWrapper from "~/components/SVGWrapper.vue";
+import SVGWrapper from "~/components/SVGWrapper.js";
 import constants from "~/assets/GeneratorJREastConstants.json";
 
 export default {

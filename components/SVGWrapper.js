@@ -1,4 +1,3 @@
-<script>
 export default {
     name: "SVGWrapper",
     props: {
@@ -30,4 +29,3 @@ export default {
         );
     }
 };
-</script>
