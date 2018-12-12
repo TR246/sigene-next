@@ -5,6 +5,7 @@
             v-model="drawer"
             fixed
             app
+            temporary
         >
             <v-list>
                 <v-list-tile
@@ -41,6 +42,7 @@
 
         <!-- ヘッダー -->
         <v-toolbar
+            class="toolbar"
             dark
             color="secondary"
             fixed
@@ -59,7 +61,7 @@
 export default {
     data() {
         return {
-            drawer: true,
+            drawer: false,
             items: [
                 { icon: "apps", title: "駅名標選択", to: "/" },
                 { icon: "", title: "JR東日本風", to: "/generator-jreast" }
