@@ -1,3 +1,23 @@
+const pathArrayToStr = array =>
+    array
+        .map((node, i) => {
+            if (node.close) return "z";
+            if (i === 0 || node.begin) return `M ${node.x} ${node.y}`;
+            if (node.curve === "cubic")
+                return `C ${node.x1} ${node.y1}, ${node.x2} ${node.y2}, ${
+                    node.x
+                } ${node.y}`;
+            if (node.curve === "quadratic")
+                return `Q ${node.x1} ${node.y1}, ${node.x} ${node.y}`;
+            // ここから直線
+            const isInX = "x" in node,
+                isInY = "y" in node;
+            if (isInX && !isInY) return `H ${node.x}`;
+            else if (!isInX && isInY) return `V ${node.y}`;
+            else return `L ${node.x} ${node.y}`;
+        })
+        .join(",");
+
 export default {
     name: "SVGWrapper",
     props: {
@@ -85,6 +105,8 @@ export default {
                 return `url(#${attrs.id})`;
             },
             contents = JSON.parse(JSON.stringify(this.contents)).map(item => {
+                if (item.type === "path") item.d = pathArrayToStr(item.d);
+
                 if (!item.fill) item.fill = "none";
                 if (!item.stroke) item.stroke = "none";
 

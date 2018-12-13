@@ -9,7 +9,6 @@
 <script>
 import SVGWrapper from "~/components/SVGWrapper.js";
 import constants from "~/assets/GeneratorJREastConstants.json";
-import { pathArrayToStr } from "~/assets/svgUtils.js";
 
 export default {
     name: "GeneratorJREastSign",
@@ -169,14 +168,14 @@ export default {
                 // 枠
                 svgArray.push({
                     type: "path",
-                    d: pathArrayToStr([
+                    d: [
                         { x: 10, y: 2 },
                         { x: 10, y: housing.height - 30 },
                         { x: 20, y: housing.height - 2 },
                         { x: housing.width - 20, y: housing.height - 2 },
                         { x: housing.width - 10, y: housing.height - 30 },
                         { x: housing.width - 10, y: 2 }
-                    ]),
+                    ],
                     fill: constHousing.frameDarkColor
                 });
                 const frameFill = {
@@ -198,26 +197,26 @@ export default {
                 };
                 svgArray.push({
                     type: "path",
-                    d: pathArrayToStr([
+                    d: [
                         { x: 0, y: 0 },
                         { x: 15 },
                         { y: housing.height - 30 },
                         { x: 30, y: housing.height },
                         { x: 15, y: housing.height },
                         { x: 0, y: housing.height - 30 }
-                    ]),
+                    ],
                     fill: frameFill
                 });
                 svgArray.push({
                     type: "path",
-                    d: pathArrayToStr([
+                    d: [
                         { x: housing.width, y: 0 },
                         { x: housing.width - 15 },
                         { y: housing.height - 30 },
                         { x: housing.width - 30, y: housing.height },
                         { x: housing.width - 15, y: housing.height },
                         { x: housing.width, y: housing.height - 30 }
-                    ]),
+                    ],
                     fill: frameFill
                 });
 
@@ -243,7 +242,7 @@ export default {
                 };
                 svgArray.push({
                     type: "path",
-                    d: pathArrayToStr([
+                    d: [
                         { x: panelArea.x, y: panelArea.y },
                         { x: panelArea.x, y: panelArea.y + panelArea.height },
                         {
@@ -259,7 +258,7 @@ export default {
                             y: panelArea.y + panelArea.height
                         },
                         { x: panelArea.x + panelArea.width, y: panelArea.y }
-                    ]),
+                    ],
                     fill: panelFill
                 });
             }
