@@ -117,6 +117,7 @@ export default {
                         : constants.housing.panelBackground
                 });
 
+                // 点灯状態の光
                 if (housing.lighting) {
                     svgArray.push({
                         type: "rect",
