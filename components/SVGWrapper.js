@@ -84,7 +84,10 @@ export default {
                 );
                 return `url(#${attrs.id})`;
             },
-            contents = this.contents.map(item => {
+            contents = JSON.parse(JSON.stringify(this.contents)).map(item => {
+                if (!item.fill) item.fill = "none";
+                if (!item.stroke) item.stroke = "none";
+
                 if (typeof item.fill === "object")
                     item.fill = createGradient(item.fill);
 
