@@ -36,17 +36,23 @@ export default {
                     y: 5,
                     width: housing.width - 10,
                     height: housing.height - 10,
-                    fill: "none",
-                    stroke: constants.housing.frameDarkColor,
-                    "stroke-width": 2,
-                    blur: 1
+                    "stroke-width": 3,
+                    stroke: constants.housing.frameDarkColor
                 });
                 svgArray.push({
                     type: "rect",
                     x: 5,
-                    y: 80,
+                    y: 20,
                     width: housing.width - 10,
-                    height: 5,
+                    height: 60,
+                    fill: constants.housing.frameColor
+                });
+                svgArray.push({
+                    type: "rect",
+                    x: 5,
+                    y: 79,
+                    width: housing.width - 10,
+                    height: 6,
                     fill: {
                         type: "linearGradient",
                         from: { x: 0, y: 0 },
@@ -65,6 +71,38 @@ export default {
                         ]
                     }
                 });
+                svgArray.push({
+                    type: "rect",
+                    x: 5,
+                    y: housing.height - 35,
+                    width: housing.width - 10,
+                    height: 6,
+                    fill: {
+                        type: "linearGradient",
+                        from: { x: 0, y: 0 },
+                        to: { x: 0, y: 1 },
+                        stops: [
+                            {
+                                offset: 0,
+                                color: constants.housing.frameDarkColor,
+                                opacity: 0
+                            },
+                            {
+                                offset: 0.8,
+                                color: constants.housing.frameDarkColor,
+                                opacity: 0.8
+                            }
+                        ]
+                    }
+                });
+                svgArray.push({
+                    type: "rect",
+                    x: 8,
+                    y: housing.height - 16,
+                    width: housing.width - 16,
+                    height: 8,
+                    fill: constants.housing.frameDarkColor
+                });
 
                 // 表示パネル
                 svgArray.push({
@@ -75,6 +113,46 @@ export default {
                     height: housing.height - 110,
                     fill: constants.housing.panelBackground
                 });
+
+                if (housing.lighting) {
+                    svgArray.push({
+                        type: "rect",
+                        x: housing.padding + 10,
+                        y: 90,
+                        width: housing.width - housing.padding * 2 - 20,
+                        height: housing.height - 130,
+                        fill: "#F0F0FF",
+                        opacity: 0.8,
+                        blur: 10
+                    });
+                    svgArray.push({
+                        type: "rect",
+                        x: housing.padding + 10,
+                        y: 90,
+                        width: housing.width - housing.padding * 2 - 20,
+                        height: housing.height - 130,
+                        fill: {
+                            type: "radialGradient",
+                            gradientUnits: "objectBoundingBox",
+                            center: { x: 0.5, y: 0 },
+                            focus: { x: 0.5, y: 0.2 },
+                            radius: 1,
+                            stops: [
+                                {
+                                    offset: 0.5,
+                                    color: "#F0F0FF",
+                                    opacity: 0.8
+                                },
+                                {
+                                    offset: 1,
+                                    color: "#F0F0FF",
+                                    opacity: 0
+                                }
+                            ]
+                        },
+                        blur: 10
+                    });
+                }
             }
 
             return svgArray;

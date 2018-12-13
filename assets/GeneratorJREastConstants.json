@@ -1,7 +1,7 @@
 {
     "housing": {
-        "frameColor": "#353535",
+        "frameColor": "#2A2A2A",
         "frameDarkColor": "#212121",
-        "panelBackground": "#EEEEEE"
+        "panelBackground": "#D0D0D0"
     }
 }
