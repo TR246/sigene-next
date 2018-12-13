@@ -111,7 +111,9 @@ export default {
                     y: 80,
                     width: housing.width - housing.padding * 2,
                     height: housing.height - 110,
-                    fill: constants.housing.panelBackground
+                    fill: housing.lighting
+                        ? "#999"
+                        : constants.housing.panelBackground
                 });
 
                 if (housing.lighting) {
@@ -122,7 +124,7 @@ export default {
                         width: housing.width - housing.padding * 2 - 20,
                         height: housing.height - 130,
                         fill: "#F0F0FF",
-                        opacity: 0.8,
+                        opacity: 0.6,
                         blur: 10
                     });
                     svgArray.push({

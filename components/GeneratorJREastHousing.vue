@@ -90,7 +90,7 @@
                                     :true-value="true"
                                     :false-value="false"
                                     color="primary"
-                                    label="LED点灯"
+                                    label="LED点灯(処理が重くなることがあります)"
                                     @change="change('lighting', $event)"/>
                             </v-flex>
                         </template>
