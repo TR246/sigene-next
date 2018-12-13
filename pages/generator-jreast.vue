@@ -73,11 +73,5 @@ export default {
     width: 100%;
     margin-top: 60vh;
     padding-top: 10vh;
-    background: linear-gradient(
-        to bottom,
-        rgba(#000, 0),
-        rgba(#000, 0.5) 30vh,
-        rgba(#000, 0.5)
-    );
 }
 </style>
