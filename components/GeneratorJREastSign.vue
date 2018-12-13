@@ -37,7 +37,8 @@ export default {
                     height: housing.height - 10,
                     fill: "none",
                     stroke: constants.housing.frameDarkColor,
-                    strokeWidth: 2
+                    "stroke-width": 2,
+                    blur: 1
                 });
                 svgArray.push({
                     type: "rect",

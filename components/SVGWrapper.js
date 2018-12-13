@@ -16,8 +16,14 @@ export default {
     },
     render(createElement) {
         let count = 0;
-        const createId = () => `SVGWrapperComponent_${this._uid}_${count++}`,
-            defs = [],
+        const defs = [],
+            createId = () => `SVGWrapperComponent_${this._uid}_${count++}`,
+            objectToDocument = ({ name, attrs = {}, children = [] }) =>
+                createElement(
+                    name,
+                    { attrs },
+                    children.map(child => objectToDocument(child))
+                ),
             createGradient = props => {
                 const attrs = {
                     id: createId(),
@@ -58,12 +64,47 @@ export default {
                 );
                 return `url(#${attrs.id})`;
             },
+            createFilter = props => {
+                const attrs = {
+                    id: createId(),
+                    x: props.x,
+                    y: props.y,
+                    width: props.width,
+                    height: props.height,
+                    filterRes: props.filterRes,
+                    filterUnits: props.filterUnits,
+                    primitiveUnits: props.primitiveUnits
+                };
+                defs.push(
+                    createElement(
+                        "filter",
+                        { attrs },
+                        props.filters.map(filter => objectToDocument(filter))
+                    )
+                );
+                return `url(#${attrs.id})`;
+            },
             contents = this.contents.map(item => {
                 if (typeof item.fill === "object")
                     item.fill = createGradient(item.fill);
+
                 if (typeof item.stroke === "object")
                     item.stroke = createGradient(item.stroke);
-                console.log(item);
+
+                if (item.filter) item.filter = createFilter(item.filter);
+                else if (item.blur)
+                    item.filter = createFilter({
+                        filters: [
+                            {
+                                name: "feGaussianBlur",
+                                attrs: {
+                                    in: "SourceGraphic",
+                                    stdDeviation: item.blur
+                                }
+                            }
+                        ]
+                    });
+
                 return createElement(item.type, { attrs: item });
             });
 
