@@ -2,7 +2,8 @@
     <SVGWrapper
         :width="store.housing.width"
         :height="store.housing.height"
-        :contents="contents"/>
+        :contents="contents"
+        class="svg"/>
 </template>
 
 <script>
@@ -85,3 +86,12 @@ export default {
     }
 };
 </script>
+
+<style lang="scss" scoped>
+.svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 20px rgba(#fff, 0.3));
+}
+</style>
