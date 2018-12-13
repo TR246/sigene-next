@@ -2,7 +2,8 @@ const pathArrayToStr = array =>
     array
         .map((node, i) => {
             if (node.close) return "z";
-            if (i === 0 || node.begin) return `M ${node.x} ${node.y}`;
+            if (i === 0 || array[i - 1].close || node.begin)
+                return `M ${node.x} ${node.y}`;
             if (node.curve === "cubic")
                 return `C ${node.x1} ${node.y1}, ${node.x2} ${node.y2}, ${
                     node.x
@@ -17,6 +18,21 @@ const pathArrayToStr = array =>
             else return `L ${node.x} ${node.y}`;
         })
         .join(",");
+/*
+[
+    { x: 0, y: 0 }, // M 0 0
+    { x: 20, y: 20 }, // L 20 20
+    { x: 50 }, // H 50
+    { y: 50 }, // V 50
+    { curve: "cubic", x1: 70, y1: 50, x2: 70, y2: 100, x: 50, y: 100 }, // C 70 50 70 100 50 100
+    { x: 0 }, // H 0
+    { close: true }, // z
+    { x: 200, y: 0 }, // M 200 0
+    { y: 100 }, // V 100
+    { begin: true, x: 300, y: 0 }, // M 300 0
+    { y: 200 } // V 200
+]
+*/
 
 export default {
     name: "SVGWrapper",

@@ -174,7 +174,8 @@ export default {
                         { x: 20, y: housing.height - 2 },
                         { x: housing.width - 20, y: housing.height - 2 },
                         { x: housing.width - 10, y: housing.height - 30 },
-                        { x: housing.width - 10, y: 2 }
+                        { x: housing.width - 10, y: 2 },
+                        { close: true }
                     ],
                     fill: constHousing.frameDarkColor
                 });
@@ -203,7 +204,8 @@ export default {
                         { y: housing.height - 30 },
                         { x: 30, y: housing.height },
                         { x: 15, y: housing.height },
-                        { x: 0, y: housing.height - 30 }
+                        { x: 0, y: housing.height - 30 },
+                        { close: true }
                     ],
                     fill: frameFill
                 });
@@ -215,7 +217,8 @@ export default {
                         { y: housing.height - 30 },
                         { x: housing.width - 30, y: housing.height },
                         { x: housing.width - 15, y: housing.height },
-                        { x: housing.width, y: housing.height - 30 }
+                        { x: housing.width, y: housing.height - 30 },
+                        { close: true }
                     ],
                     fill: frameFill
                 });
@@ -257,7 +260,8 @@ export default {
                             x: panelArea.x + panelArea.width,
                             y: panelArea.y + panelArea.height
                         },
-                        { x: panelArea.x + panelArea.width, y: panelArea.y }
+                        { x: panelArea.x + panelArea.width, y: panelArea.y },
+                        { close: true }
                     ],
                     fill: panelFill
                 });
