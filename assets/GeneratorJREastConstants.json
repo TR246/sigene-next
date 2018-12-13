@@ -1,7 +1,14 @@
 {
     "housing": {
-        "frameColor": "#303030",
-        "frameDarkColor": "#212121",
-        "panelBackground": "#E0E0E0"
+        "se-led": {
+            "frameColor": "#303030",
+            "frameDarkColor": "#212121",
+            "panelBackground": "#E0E0E0"
+        },
+        "b-fl": {
+            "frameColor": "#303030",
+            "frameDarkColor": "#212121",
+            "panelBackground": "#E0E0E0"
+        }
     }
 }

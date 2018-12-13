@@ -1,6 +1,6 @@
 export const state = () => ({
     housing: {
-        type: "se-led",
+        type: "b-fl",
         width: 1900,
         height: 600,
         padding: 35,
@@ -17,6 +17,13 @@ export const getters = {
                     y: 80,
                     width: state.housing.width - state.housing.padding * 2,
                     height: state.housing.height - 110
+                };
+            case "b-fl":
+                return {
+                    x: 15,
+                    y: 15,
+                    width: state.housing.width - 30,
+                    height: state.housing.height - 45
                 };
             default:
                 return {
