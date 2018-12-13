@@ -2,7 +2,7 @@
     <SVGWrapper
         :width="store.housing.width"
         :height="store.housing.height"
-        :content="content"/>
+        :contents="contents"/>
 </template>
 
 <script>
@@ -13,7 +13,7 @@ export default {
     name: "GeneratorJREastSign",
     components: { SVGWrapper },
     computed: {
-        content() {
+        contents() {
             const svgArray = [],
                 { housing } = this.store,
                 { constants } = this;
@@ -38,6 +38,30 @@ export default {
                     fill: "none",
                     stroke: constants.housing.frameDarkColor,
                     strokeWidth: 2
+                });
+                svgArray.push({
+                    type: "rect",
+                    x: 5,
+                    y: 80,
+                    width: housing.width - 10,
+                    height: 5,
+                    fill: {
+                        type: "linearGradient",
+                        from: { x: 0, y: 0 },
+                        to: { x: 0, y: 1 },
+                        stops: [
+                            {
+                                offset: 0.2,
+                                color: constants.housing.frameDarkColor,
+                                opacity: 0.8
+                            },
+                            {
+                                offset: 1,
+                                color: constants.housing.frameDarkColor,
+                                opacity: 0
+                            }
+                        ]
+                    }
                 });
 
                 // 表示パネル
