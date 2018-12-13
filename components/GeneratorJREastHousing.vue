@@ -85,13 +85,17 @@
                             </v-flex>
                             <!-- LED点灯の有無 -->
                             <v-flex xs12>
-                                <v-switch
-                                    :input-value="housing.lighting"
-                                    :true-value="true"
-                                    :false-value="false"
-                                    color="primary"
-                                    label="LED点灯(処理が重くなることがあります)"
-                                    @change="change('lighting', $event)"/>
+                                <v-tooltip top>
+                                    <v-switch
+                                        slot="activator"
+                                        :input-value="housing.lighting"
+                                        :true-value="true"
+                                        :false-value="false"
+                                        color="primary"
+                                        label="LED点灯"
+                                        @change="change('lighting', $event)"/>
+                                    <span>質感はよくなりますが処理が重くなることがあります</span>
+                                </v-tooltip>
                             </v-flex>
                         </template>
                     </v-layout>

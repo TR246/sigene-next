@@ -4,7 +4,7 @@ export const state = () => ({
         width: 1900,
         height: 600,
         padding: 35,
-        lighting: true
+        lighting: false
     }
 });
 
