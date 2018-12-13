@@ -17,6 +17,7 @@ export default {
         contents() {
             const svgArray = [],
                 { housing } = this.store,
+                panelArea = this.$store.getters["GeneratorJREast/panelArea"],
                 { constants } = this;
 
             // SE型のみ
@@ -107,10 +108,10 @@ export default {
                 // 表示パネル
                 svgArray.push({
                     type: "rect",
-                    x: housing.padding,
-                    y: 80,
-                    width: housing.width - housing.padding * 2,
-                    height: housing.height - 110,
+                    x: panelArea.x,
+                    y: panelArea.y,
+                    width: panelArea.width,
+                    height: panelArea.height,
                     fill: housing.lighting
                         ? "#999"
                         : constants.housing.panelBackground
@@ -119,20 +120,20 @@ export default {
                 if (housing.lighting) {
                     svgArray.push({
                         type: "rect",
-                        x: housing.padding + 10,
-                        y: 90,
-                        width: housing.width - housing.padding * 2 - 20,
-                        height: housing.height - 130,
+                        x: panelArea.x + 10,
+                        y: panelArea.y + 10,
+                        width: panelArea.width - 20,
+                        height: panelArea.height - 20,
                         fill: "#F0F0FF",
                         opacity: 0.6,
                         blur: 10
                     });
                     svgArray.push({
                         type: "rect",
-                        x: housing.padding + 10,
-                        y: 90,
-                        width: housing.width - housing.padding * 2 - 20,
-                        height: housing.height - 130,
+                        x: panelArea.x + 10,
+                        y: panelArea.y + 10,
+                        width: panelArea.width - 20,
+                        height: panelArea.height - 20,
                         fill: {
                             type: "radialGradient",
                             gradientUnits: "objectBoundingBox",

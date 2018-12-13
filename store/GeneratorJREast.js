@@ -8,6 +8,27 @@ export const state = () => ({
     }
 });
 
+export const getters = {
+    panelArea: state => {
+        switch (state.housing.type) {
+            case "se-led":
+                return {
+                    x: state.housing.padding,
+                    y: 80,
+                    width: state.housing.width - state.housing.padding * 2,
+                    height: state.housing.height - 110
+                };
+            default:
+                return {
+                    x: 0,
+                    y: 0,
+                    width: state.housing.width,
+                    height: state.housing.height
+                };
+        }
+    }
+};
+
 export const mutations = {
     change(state, { key, value }) {
         const keyArr = key.split(".").map(s => s.trim()),
