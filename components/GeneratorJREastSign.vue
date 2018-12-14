@@ -158,6 +158,27 @@ export default {
                         },
                         blur: 10
                     });
+                    svgArray.push({
+                        type: "path",
+                        d: [
+                            { x: panelArea.x + 20, y: panelArea.y + 20 },
+                            {
+                                x: panelArea.x + 300,
+                                y: panelArea.y + panelArea.height * 0.8
+                            },
+                            {
+                                x: panelArea.x + panelArea.width - 300,
+                                y: panelArea.y + panelArea.height * 0.8
+                            },
+                            {
+                                x: panelArea.x + panelArea.width - 20,
+                                y: panelArea.y + 20
+                            }
+                        ],
+                        fill: "#F0F0FF",
+                        opacity: 0.5,
+                        blur: 20
+                    });
                 }
             }
 
@@ -265,6 +286,9 @@ export default {
                     ],
                     fill: panelFill
                 });
+
+                // 点灯状態
+                // if (housing.lighting) {}
             }
 
             return svgArray;
