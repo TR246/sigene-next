@@ -9,6 +9,13 @@
             "frameColor": "#303030",
             "frameDarkColor": "#212121",
             "panelBackground": "#E0E0E0"
+        },
+        "non-light": {
+            "frameColor": "#303030",
+            "panelBackground": "#E0E0E0"
+        },
+        "none": {
+            "panelBackground": "#F0F0F0"
         }
     }
 }

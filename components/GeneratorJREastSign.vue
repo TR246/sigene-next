@@ -18,12 +18,11 @@ export default {
             const svgArray = [],
                 { housing } = this.store,
                 panelArea = this.$store.getters["GeneratorJREast/panelArea"],
-                { constants } = this;
+                { constants } = this,
+                constHousing = constants.housing[housing.type];
 
             // SE型のみ
             if (housing.type === "se-led") {
-                const constHousing = constants.housing["se-led"];
-
                 // 枠
                 svgArray.push({
                     type: "rect",
@@ -183,9 +182,7 @@ export default {
             }
 
             // B形のみ
-            if (housing.type === "b-fl") {
-                const constHousing = constants.housing["b-fl"];
-
+            else if (housing.type === "b-fl") {
                 // 枠
                 svgArray.push({
                     type: "path",
@@ -254,13 +251,16 @@ export default {
                         {
                             offset: 0,
                             color: housing.lighting
-                                ? "#999"
+                                ? "#AAA"
                                 : constHousing.panelBackground
                         },
-                        { offset: 0.5, color: "#EEE" },
+                        {
+                            offset: 0.5,
+                            color: housing.lighting ? "#CCC" : "#EEE"
+                        },
                         {
                             offset: 1,
-                            color: housing.lighting ? "#888" : "#C0C0C0"
+                            color: housing.lighting ? "#999" : "#C0C0C0"
                         }
                     ]
                 };
@@ -288,7 +288,49 @@ export default {
                 });
 
                 // 点灯状態
-                // if (housing.lighting) {}
+                if (housing.lighting) {
+                    svgArray.push({
+                        type: "rect",
+                        x: panelArea.x + 50,
+                        y: panelArea.y + 30,
+                        width: panelArea.width - 100,
+                        height: panelArea.height - 30,
+                        fill: "#FFFFF0",
+                        blur: 30
+                    });
+                }
+            }
+
+            // 非電照型のみ
+            else if (housing.type === "non-light") {
+                svgArray.push({
+                    type: "rect",
+                    x: 0,
+                    y: 0,
+                    width: housing.width,
+                    height: housing.height,
+                    fill: constHousing.frameColor
+                });
+                svgArray.push({
+                    type: "rect",
+                    x: panelArea.x,
+                    y: panelArea.y,
+                    width: panelArea.width,
+                    height: panelArea.height,
+                    fill: constHousing.panelBackground
+                });
+            }
+
+            // none
+            else {
+                svgArray.push({
+                    type: "rect",
+                    x: panelArea.x,
+                    y: panelArea.y,
+                    width: panelArea.width,
+                    height: panelArea.height,
+                    fill: constHousing.panelBackground
+                });
             }
 
             return svgArray;

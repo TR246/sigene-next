@@ -1,6 +1,6 @@
 export const state = () => ({
     housing: {
-        type: "b-fl",
+        type: "se-led",
         width: 1900,
         height: 600,
         padding: 35,
@@ -10,20 +10,28 @@ export const state = () => ({
 
 export const getters = {
     panelArea: state => {
+        const { width, height } = state.housing;
         switch (state.housing.type) {
             case "se-led":
                 return {
                     x: state.housing.padding,
                     y: 80,
-                    width: state.housing.width - state.housing.padding * 2,
-                    height: state.housing.height - 110
+                    width: width - state.housing.padding * 2,
+                    height: height - 110
                 };
             case "b-fl":
                 return {
                     x: 15,
                     y: 15,
-                    width: state.housing.width - 30,
-                    height: state.housing.height - 45
+                    width: width - 30,
+                    height: height - 45
+                };
+            case "non-light":
+                return {
+                    x: 15,
+                    y: 15,
+                    width: width - 30,
+                    height: height - 30
                 };
             default:
                 return {
