@@ -84,7 +84,7 @@
                                 </v-btn>
                             </v-flex>
                         </template>
-                        <!-- LED点灯の有無 -->
+                        <!-- 点灯の有無 -->
                         <v-flex
                             v-if="type === 'se-led' || type === 'b-fl'"
                             xs12>
@@ -95,7 +95,7 @@
                                     :true-value="true"
                                     :false-value="false"
                                     color="primary"
-                                    label="LED点灯"
+                                    label="照明点灯"
                                     @change="change('lighting', $event)"/>
                                 <span>質感はよくなりますが処理が重くなることがあります</span>
                             </v-tooltip>
