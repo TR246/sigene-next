@@ -197,49 +197,6 @@ export default {
                     ],
                     fill: constHousing.frameDarkColor
                 });
-                const frameFill = {
-                    type: "linearGradient",
-                    gradientUnits: "userSpaceOnUse",
-                    from: { x: 0, y: housing.height - 33 },
-                    to: { x: 0, y: housing.height - 27 },
-                    stops: [
-                        {
-                            offset: 0,
-                            color: constHousing.frameColor
-                        },
-                        { offset: 0.5, color: "#AAA" },
-                        {
-                            offset: 1,
-                            color: constHousing.frameColor
-                        }
-                    ]
-                };
-                svgArray.push({
-                    type: "path",
-                    d: [
-                        { x: 0, y: 0 },
-                        { x: 15 },
-                        { y: housing.height - 30 },
-                        { x: 30, y: housing.height },
-                        { x: 15, y: housing.height },
-                        { x: 0, y: housing.height - 30 },
-                        { close: true }
-                    ],
-                    fill: frameFill
-                });
-                svgArray.push({
-                    type: "path",
-                    d: [
-                        { x: housing.width, y: 0 },
-                        { x: housing.width - 15 },
-                        { y: housing.height - 30 },
-                        { x: housing.width - 30, y: housing.height },
-                        { x: housing.width - 15, y: housing.height },
-                        { x: housing.width, y: housing.height - 30 },
-                        { close: true }
-                    ],
-                    fill: frameFill
-                });
 
                 // 表示パネル
                 const panelFill = {
@@ -285,6 +242,51 @@ export default {
                         { close: true }
                     ],
                     fill: panelFill
+                });
+
+                // 枠
+                const frameFill = {
+                    type: "linearGradient",
+                    gradientUnits: "userSpaceOnUse",
+                    from: { x: 0, y: housing.height - 33 },
+                    to: { x: 0, y: housing.height - 27 },
+                    stops: [
+                        {
+                            offset: 0,
+                            color: constHousing.frameColor
+                        },
+                        { offset: 0.5, color: "#AAA" },
+                        {
+                            offset: 1,
+                            color: constHousing.frameColor
+                        }
+                    ]
+                };
+                svgArray.push({
+                    type: "path",
+                    d: [
+                        { x: 0, y: 0 },
+                        { x: 15 },
+                        { y: housing.height - 30 },
+                        { x: 30, y: housing.height },
+                        { x: 15, y: housing.height },
+                        { x: 0, y: housing.height - 30 },
+                        { close: true }
+                    ],
+                    fill: frameFill
+                });
+                svgArray.push({
+                    type: "path",
+                    d: [
+                        { x: housing.width, y: 0 },
+                        { x: housing.width - 15 },
+                        { y: housing.height - 30 },
+                        { x: housing.width - 30, y: housing.height },
+                        { x: housing.width - 15, y: housing.height },
+                        { x: housing.width, y: housing.height - 30 },
+                        { close: true }
+                    ],
+                    fill: frameFill
                 });
 
                 // 点灯状態

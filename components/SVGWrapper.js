@@ -34,6 +34,8 @@ const pathArrayToStr = array =>
 ]
 */
 
+let countForId = 0;
+
 export default {
     name: "SVGWrapper",
     props: {
@@ -51,9 +53,8 @@ export default {
         }
     },
     render(createElement) {
-        let count = 0;
         const defs = [],
-            createId = () => `SVGWrapperComponent_${this._uid}_${count++}`,
+            createId = () => `SVGWrapperComponent_${countForId++}`,
             objectToDocument = ({ name, attrs = {}, children = [] }) =>
                 createElement(
                     name,
