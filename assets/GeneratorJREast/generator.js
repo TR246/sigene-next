@@ -82,8 +82,8 @@ export default state => {
             height: 6,
             fill: {
                 type: "linearGradient",
-                from: { x: 0, y: 0 },
-                to: { x: 0, y: 1 },
+                from: { x: 0, y: 79 },
+                to: { x: 0, y: 85 },
                 stops: [
                     {
                         offset: 0.2,
@@ -106,8 +106,8 @@ export default state => {
             height: 6,
             fill: {
                 type: "linearGradient",
-                from: { x: 0, y: 0 },
-                to: { x: 0, y: 1 },
+                from: { x: 0, y: housing.height - 35 },
+                to: { x: 0, y: housing.height - 29 },
                 stops: [
                     {
                         offset: 0,
@@ -203,11 +203,9 @@ export default state => {
                 width: panelArea.width - 20,
                 height: panelArea.height - 20,
                 fill: {
-                    type: "radialGradient",
-                    gradientUnits: "objectBoundingBox",
-                    center: { x: 0.5, y: 0 },
-                    focus: { x: 0.5, y: 0.2 },
-                    radius: 1,
+                    type: "linearGradient",
+                    from: { x: 0, y: panelArea.y + 10 },
+                    to: { x: 0, y: panelArea.y + panelArea.height - 10 },
                     stops: [
                         {
                             offset: 0.5,

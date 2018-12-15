@@ -64,8 +64,7 @@ export default {
             createGradient = props => {
                 const attrs = {
                     id: createId(),
-                    gradientUnits: props.gradientUnits || "objectBoundingBox",
-                    spreadMethod: props.spreadMethod || "pad"
+                    gradientUnits: "userSpaceOnUse"
                 };
                 switch (props.type) {
                     case "linearGradient":
@@ -74,7 +73,7 @@ export default {
                         attrs.x2 = props.to.x;
                         attrs.y2 = props.to.y;
                         break;
-                    case "radialGradient":
+                    /*case "radialGradient":
                         attrs.cx = props.center.x;
                         attrs.cy = props.center.y;
                         if (props.focus) {
@@ -82,7 +81,7 @@ export default {
                             attrs.fy = props.focus.y;
                         }
                         attrs.r = props.radius;
-                        break;
+                        break;*/
                 }
                 defs.push(
                     createElement(
