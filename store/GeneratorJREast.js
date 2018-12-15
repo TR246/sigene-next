@@ -29,10 +29,10 @@ export const getters = {
                 };
             case "b-fl":
                 return {
-                    x: 15,
-                    y: 15,
-                    width: width - 30,
-                    height: height - 45
+                    x: 30,
+                    y: 20,
+                    width: width - 60,
+                    height: height - 50
                 };
             case "non-light":
                 return {
