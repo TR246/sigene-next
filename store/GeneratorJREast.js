@@ -1,3 +1,5 @@
+import generator from "~/assets/GeneratorJREast/generator.js";
+
 export const state = () => ({
     housing: {
         type: "se-led",
@@ -17,39 +19,7 @@ export const state = () => ({
 });
 
 export const getters = {
-    panelArea: state => {
-        const { width, height } = state.housing;
-        switch (state.housing.type) {
-            case "se-led":
-                return {
-                    x: state.housing.padding,
-                    y: 80,
-                    width: width - state.housing.padding * 2,
-                    height: height - 110
-                };
-            case "b-fl":
-                return {
-                    x: 30,
-                    y: 20,
-                    width: width - 60,
-                    height: height - 50
-                };
-            case "non-light":
-                return {
-                    x: 15,
-                    y: 15,
-                    width: width - 30,
-                    height: height - 30
-                };
-            default:
-                return {
-                    x: 0,
-                    y: 0,
-                    width: state.housing.width,
-                    height: state.housing.height
-                };
-        }
-    }
+    contents: generator
 };
 
 export const mutations = {
