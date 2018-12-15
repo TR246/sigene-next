@@ -5,6 +5,13 @@ export const state = () => ({
         height: 600,
         padding: 35,
         lighting: false
+    },
+    useNumbering: true,
+    fonts: {
+        janapese: "",
+        engligh: "",
+        chinese: "",
+        korean: ""
     }
 });
 
