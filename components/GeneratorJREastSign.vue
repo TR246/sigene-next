@@ -121,7 +121,8 @@ export default {
                         y: 6,
                         width: 25,
                         height: 70,
-                        image: images["cho-ene"]
+                        image: images["cho-ene"],
+                        opacity: 0.8
                     });
                 if (stickers.includes("ego-train-kankyo-led"))
                     svgArray.push({
@@ -130,7 +131,8 @@ export default {
                         y: 10,
                         width: 305,
                         height: 65,
-                        image: images["ego-train-kankyo-led"]
+                        image: images["ego-train-kankyo-led"],
+                        opacity: 0.8
                     });
                 if (stickers.includes("kankyo-led"))
                     svgArray.push({
@@ -139,7 +141,8 @@ export default {
                         y: 8,
                         width: 250,
                         height: 65,
-                        image: images["kankyo-led"]
+                        image: images["kankyo-led"],
+                        opacity: 0.8
                     });
                 if (stickers.includes("shin-insha"))
                     svgArray.push({
@@ -148,7 +151,8 @@ export default {
                         y: panelArea.y + panelArea.height + 2,
                         width: 35,
                         height: 10,
-                        image: images["shin-insha"]
+                        image: images["shin-insha"],
+                        opacity: 0.8
                     });
 
                 // 表示パネル
