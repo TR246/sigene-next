@@ -123,6 +123,7 @@ export default {
             },
             contents = JSON.parse(JSON.stringify(this.contents)).map(item => {
                 if (item.type === "path") item.d = pathArrayToStr(item.d);
+                if (item.image) item["xlink:href"] = item.image;
 
                 if (!item.fill) item.fill = "none";
                 if (!item.stroke) item.stroke = "none";

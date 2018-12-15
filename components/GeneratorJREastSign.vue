@@ -9,6 +9,12 @@
 <script>
 import SVGWrapper from "~/components/SVGWrapper.js";
 import constants from "~/assets/GeneratorJREastConstants.json";
+const images = {
+    "cho-ene": require("~/assets/GeneratorJREast/cho-ene.png"),
+    "ego-train-kankyo-led": require("~/assets/GeneratorJREast/ego-train-kankyo-led.png"),
+    "kankyo-led": require("~/assets/GeneratorJREast/kankyo-led.png"),
+    "shin-insha": require("~/assets/GeneratorJREast/shin-insha.png")
+};
 
 export default {
     name: "GeneratorJREastSign",
@@ -105,6 +111,45 @@ export default {
                     height: 8,
                     fill: constHousing.frameDarkColor
                 });
+
+                // ステッカー
+                const stickers = housing.stickers.split(",");
+                if (stickers.includes("cho-ene"))
+                    svgArray.push({
+                        type: "image",
+                        x: panelArea.x + panelArea.width - 25,
+                        y: 6,
+                        width: 25,
+                        height: 70,
+                        image: images["cho-ene"]
+                    });
+                if (stickers.includes("ego-train-kankyo-led"))
+                    svgArray.push({
+                        type: "image",
+                        x: panelArea.x,
+                        y: 10,
+                        width: 305,
+                        height: 65,
+                        image: images["ego-train-kankyo-led"]
+                    });
+                if (stickers.includes("kankyo-led"))
+                    svgArray.push({
+                        type: "image",
+                        x: panelArea.x,
+                        y: 8,
+                        width: 250,
+                        height: 65,
+                        image: images["kankyo-led"]
+                    });
+                if (stickers.includes("shin-insha"))
+                    svgArray.push({
+                        type: "image",
+                        x: panelArea.x + panelArea.width - 35,
+                        y: panelArea.y + panelArea.height + 2,
+                        width: 35,
+                        height: 10,
+                        image: images["shin-insha"]
+                    });
 
                 // 表示パネル
                 svgArray.push({

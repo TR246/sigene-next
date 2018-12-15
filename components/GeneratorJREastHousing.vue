@@ -83,6 +83,14 @@
                                     プリセットを適用
                                 </v-btn>
                             </v-flex>
+                            <!-- ステッカー -->
+                            <v-flex xs12>
+                                <v-select
+                                    :items="housingStickersSE"
+                                    :value="housing.stickers"
+                                    label="筐体のステッカー"
+                                    @change="change('stickers', $event)"/>
+                            </v-flex>
                         </template>
                         <!-- 点灯の有無 -->
                         <v-flex
@@ -137,7 +145,24 @@ export default {
             { text: "SE-7型 (駅名標用: 幅広)", value: "SE-7" },
             { text: "SE-8型 (サイン用: 特大)", value: "SE-8" }
         ],
-        preset: "SE-6"
+        preset: "SE-6",
+        housingStickersSE: [
+            { text: "新陰社(新陽社) のみ", value: "shin-insha" },
+            {
+                text: "新陰社(新陽社) + 環境にやさしいLED",
+                value: "shin-insha,kankyo-led"
+            },
+            {
+                text:
+                    "新陰社(新陽社) + 環境にやさしいLED + 超エネ大賞(省エネ大賞)",
+                value: "shin-insha,kankyo-led,cho-ene"
+            },
+            {
+                text:
+                    "新陰社(新陽社) + [egotrain(ecotrain)]環境にやさしいLED + 超エネ大賞(省エネ大賞)",
+                value: "shin-insha,ego-train-kankyo-led,cho-ene"
+            }
+        ]
     }),
     computed: {
         housing() {
