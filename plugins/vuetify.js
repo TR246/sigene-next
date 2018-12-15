@@ -11,8 +11,5 @@ Vue.use(Vuetify, {
         warning: colors.amber.base,
         error: colors.red.accent4,
         success: colors.blue.accent3
-    },
-    lang: {
-        current: "ja-jp"
     }
 });
