@@ -197,6 +197,5 @@ export default {
     position: relative;
     width: 100%;
     margin-top: 60vh;
-    padding-top: 10vh;
 }
 </style>
