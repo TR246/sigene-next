@@ -74,34 +74,7 @@
 </template>
 
 <script>
-import pngSaver from "~/assets/pngSaver.js";
-
-function replaceAsync(str, re, callback) {
-    // http://es5.github.io/#x15.5.4.11
-    str = String(str);
-    var parts = [],
-        i = 0;
-    if (Object.prototype.toString.call(re) == "[object RegExp]") {
-        if (re.global) re.lastIndex = i;
-        var m;
-        while ((m = re.exec(str))) {
-            var args = m.concat([m.index, m.input]);
-            parts.push(str.slice(i, m.index), callback.apply(null, args));
-            i = re.lastIndex;
-            if (!re.global) break; // for non-global regexes only take the first match
-            if (m[0].length == 0) re.lastIndex++;
-        }
-    } else {
-        re = String(re);
-        i = str.indexOf(re);
-        parts.push(str.slice(0, i), callback.apply(null, [re, i, str]));
-        i += re.length;
-    }
-    parts.push(str.slice(i));
-    return Promise.all(parts).then(function(strings) {
-        return strings.join("");
-    });
-}
+import replaceAsync from "~/assets/replaceAsync.js";
 
 export default {
     name: "SignGenerator",
@@ -149,11 +122,6 @@ export default {
         },
         async saveAsPNG() {
             this.pngSaving = true;
-            /*await pngSaver(
-                this.$store.getters[`${this.name}/contents`],
-                this.$store.state[this.name].housing,
-                this.pngImage
-            );*/
             const img = document.createElement("img"),
                 svg = await replaceAsync(
                     new XMLSerializer().serializeToString(
@@ -190,17 +158,10 @@ export default {
                 a.download = "駅名標";
                 a.href = canvas.toDataURL("image/png");
                 a.click();
+                this.pngSaving = false;
+                this.pngDialog = false;
             });
             img.src = `data:image/svg+xml;base64,${btoa(svg)}`;
-            /*setTimeout(() => {
-                const canvas = document.createElement("canvas");
-                canvas.width = img.width;
-                canvas.height = img.height;
-                canvas.getContext("2d").drawImage(img, 0, 0);
-                console.log(canvas.toDataURL());
-            }, 1000);*/
-            this.pngSaving = false;
-            this.pngDialog = false;
         }
     }
 };
