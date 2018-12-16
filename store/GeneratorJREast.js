@@ -7,7 +7,7 @@ export const state = () => ({
         height: 600,
         padding: 35,
         lighting: false,
-        stickers: "shin-insha,ego-train-kankyo-led,cho-ene"
+        stickers: "shin-insha,emo-train-kankyo-led,ro-ene"
     },
     useNumbering: true,
     fonts: {

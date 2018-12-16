@@ -122,7 +122,10 @@ export default {
             },
             contents = JSON.parse(JSON.stringify(this.contents)).map(item => {
                 if (item.type === "path") item.d = pathArrayToStr(item.d);
-                if (item.image) item["xlink:href"] = item.image;
+                if (item.image) {
+                    item["xlink:href"] = `http://localhost:3000${item.image}`;
+                    delete item.image;
+                }
 
                 if (!item.fill) item.fill = "none";
                 if (!item.stroke) item.stroke = "none";
@@ -156,6 +159,7 @@ export default {
             {
                 attrs: {
                     xmlns: "http://www.w3.org/2000/svg",
+                    "xmlns:xlink": "http://www.w3.org/1999/xlink",
                     width: this.width,
                     height: this.height,
                     viewBox: `0 0 ${this.width} ${this.height}`

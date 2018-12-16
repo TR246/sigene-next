@@ -20,6 +20,7 @@
                                     width="500">
                                     <v-btn
                                         slot="activator"
+                                        :loading="pngSaving"
                                         color="primary"
                                         depressed
                                         @click="setPNGImageDefault">
@@ -75,6 +76,33 @@
 <script>
 import pngSaver from "~/assets/pngSaver.js";
 
+function replaceAsync(str, re, callback) {
+    // http://es5.github.io/#x15.5.4.11
+    str = String(str);
+    var parts = [],
+        i = 0;
+    if (Object.prototype.toString.call(re) == "[object RegExp]") {
+        if (re.global) re.lastIndex = i;
+        var m;
+        while ((m = re.exec(str))) {
+            var args = m.concat([m.index, m.input]);
+            parts.push(str.slice(i, m.index), callback.apply(null, args));
+            i = re.lastIndex;
+            if (!re.global) break; // for non-global regexes only take the first match
+            if (m[0].length == 0) re.lastIndex++;
+        }
+    } else {
+        re = String(re);
+        i = str.indexOf(re);
+        parts.push(str.slice(0, i), callback.apply(null, [re, i, str]));
+        i += re.length;
+    }
+    parts.push(str.slice(i));
+    return Promise.all(parts).then(function(strings) {
+        return strings.join("");
+    });
+}
+
 export default {
     name: "SignGenerator",
     props: {
@@ -85,6 +113,7 @@ export default {
     },
     data: () => ({
         scroll: 0,
+        pngSaving: false,
         pngDialog: false,
         pngImage: {
             width: 0,
@@ -113,13 +142,65 @@ export default {
                 beforeValue = pngImage[key],
                 isWidth = key === "width";
             pngImage[key] = value;
-            pngImage[isWidth ? "height" : "width"] = Math.round(
+            /*pngImage[isWidth ? "height" : "width"] = Math.round(
                 (value * housing[isWidth ? "height" : "width"]) /
                     housing[isWidth ? "width" : "height"]
-            );
+            );*/
         },
-        saveAsPNG() {
-            pngSaver(this.$store.getters[`${this.name}/contents`]);
+        async saveAsPNG() {
+            this.pngSaving = true;
+            /*await pngSaver(
+                this.$store.getters[`${this.name}/contents`],
+                this.$store.state[this.name].housing,
+                this.pngImage
+            );*/
+            const img = document.createElement("img"),
+                svg = await replaceAsync(
+                    new XMLSerializer().serializeToString(
+                        this.$slots.sign[0].componentInstance.$el
+                    ),
+                    /xlink:href="(.*?)"/g,
+                    (match, href) => {
+                        const img = document.createElement("img"),
+                            canvas = document.createElement("canvas"),
+                            p = new Promise(resolve =>
+                                img.addEventListener("load", () => {
+                                    canvas.width = img.width;
+                                    canvas.height = img.height;
+                                    canvas
+                                        .getContext("2d")
+                                        .drawImage(img, 0, 0);
+                                    resolve(
+                                        `xlink:href="${canvas.toDataURL(
+                                            "image/png"
+                                        )}"`
+                                    );
+                                })
+                            );
+                        img.src = href;
+                        return p;
+                    }
+                );
+            img.addEventListener("load", () => {
+                const canvas = document.createElement("canvas"),
+                    a = document.createElement("a");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                canvas.getContext("2d").drawImage(img, 0, 0);
+                a.download = "駅名標";
+                a.href = canvas.toDataURL("image/png");
+                a.click();
+            });
+            img.src = `data:image/svg+xml;base64,${btoa(svg)}`;
+            /*setTimeout(() => {
+                const canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                canvas.getContext("2d").drawImage(img, 0, 0);
+                console.log(canvas.toDataURL());
+            }, 1000);*/
+            this.pngSaving = false;
+            this.pngDialog = false;
         }
     }
 };

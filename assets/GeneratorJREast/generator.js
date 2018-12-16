@@ -1,7 +1,7 @@
 import constants from "~/assets/GeneratorJREastConstants.json";
 const images = {
-    "cho-ene": require("~/assets/GeneratorJREast/cho-ene.png"),
-    "ego-train-kankyo-led": require("~/assets/GeneratorJREast/ego-train-kankyo-led.png"),
+    "ro-ene": require("~/assets/GeneratorJREast/ro-ene.png"),
+    "emo-train-kankyo-led": require("~/assets/GeneratorJREast/emo-train-kankyo-led.png"),
     "kankyo-led": require("~/assets/GeneratorJREast/kankyo-led.png"),
     "shin-insha": require("~/assets/GeneratorJREast/shin-insha.png")
 };
@@ -133,24 +133,24 @@ export default state => {
 
         // ステッカー
         const stickers = housing.stickers.split(",");
-        if (stickers.includes("cho-ene"))
+        if (stickers.includes("ro-ene"))
             svgArray.push({
                 type: "image",
                 x: panelArea.x + panelArea.width - 25,
                 y: 6,
                 width: 25,
                 height: 70,
-                image: images["cho-ene"],
+                image: images["ro-ene"],
                 opacity: 0.8
             });
-        if (stickers.includes("ego-train-kankyo-led"))
+        if (stickers.includes("emo-train-kankyo-led"))
             svgArray.push({
                 type: "image",
                 x: panelArea.x,
                 y: 10,
                 width: 305,
                 height: 65,
-                image: images["ego-train-kankyo-led"],
+                image: images["emo-train-kankyo-led"],
                 opacity: 0.8
             });
         if (stickers.includes("kankyo-led"))

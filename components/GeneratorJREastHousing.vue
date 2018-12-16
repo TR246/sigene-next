@@ -154,13 +154,13 @@ export default {
             },
             {
                 text:
-                    "新陰社(新陽社) + 環境にやさしいLED + 超エネ大賞(省エネ大賞)",
-                value: "shin-insha,kankyo-led,cho-ene"
+                    "新陰社(新陽社) + 環境にやさしいLED + 浪エネ大賞(省エネ大賞)",
+                value: "shin-insha,kankyo-led,ro-ene"
             },
             {
                 text:
-                    "新陰社(新陽社) + [egotrain(ecotrain)]環境にやさしいLED + 超エネ大賞(省エネ大賞)",
-                value: "shin-insha,ego-train-kankyo-led,cho-ene"
+                    "新陰社(新陽社) + [emotrain(ecotrain)]環境にやさしいLED + 浪エネ大賞(省エネ大賞)",
+                value: "shin-insha,emo-train-kankyo-led,ro-ene"
             }
         ]
     }),
