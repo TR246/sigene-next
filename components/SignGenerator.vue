@@ -20,7 +20,6 @@
                                     width="500">
                                     <v-btn
                                         slot="activator"
-                                        :loading="pngSaving"
                                         color="primary"
                                         depressed
                                         @click="setPNGImageDefault">
@@ -29,20 +28,32 @@
                                     <v-card>
                                         <v-card-text>
                                             <v-layout>
-                                                <v-flex xs5>
+                                                <v-flex>
                                                     <v-text-field
                                                         :value="pngImage.width"
                                                         type="number"
                                                         label="画像の幅"
-                                                        @input="updatePNG('width', $event)"/>
+                                                        @input="updatePNGSize('width', $event)"/>
                                                 </v-flex>
-                                                <v-spacer/>
-                                                <v-flex xs5>
+                                                <v-flex
+                                                    shrink
+                                                    align-self-center
+                                                    justify-self-center>
+                                                    <v-btn
+                                                        :depressed="pngLink"
+                                                        :flat="!pngLink"
+                                                        icon
+                                                        color="primary"
+                                                        @click="pngLink = !pngLink">
+                                                        <v-icon>link</v-icon>
+                                                    </v-btn>
+                                                </v-flex>
+                                                <v-flex>
                                                     <v-text-field
                                                         :value="pngImage.height"
                                                         type="number"
                                                         label="画像の高さ"
-                                                        @input="updatePNG('height', $event)"/>
+                                                        @input="updatePNGSize('height', $event)"/>
                                                 </v-flex>
                                             </v-layout>
                                         </v-card-text>
@@ -55,6 +66,7 @@
                                                 キャンセル
                                             </v-btn>
                                             <v-btn
+                                                :loading="pngSaving"
                                                 color="primary"
                                                 depressed
                                                 @click="saveAsPNG">
@@ -88,6 +100,7 @@ export default {
         scroll: 0,
         pngSaving: false,
         pngDialog: false,
+        pngLink: true,
         pngImage: {
             width: 0,
             height: 0
@@ -108,53 +121,54 @@ export default {
             this.pngImage.width = width;
             this.pngImage.height = height;
         },
-        updatePNG(key, value) {
+        updatePNGSize(key, value) {
             value = parseInt(value, 10);
             const { pngImage } = this,
                 { housing } = this.$store.state[this.name],
                 beforeValue = pngImage[key],
-                isWidth = key === "width";
+                oppoiste = key === "width" ? "height" : "width";
             pngImage[key] = value;
-            /*pngImage[isWidth ? "height" : "width"] = Math.round(
-                (value * housing[isWidth ? "height" : "width"]) /
-                    housing[isWidth ? "width" : "height"]
-            );*/
+            if (this.pngLink)
+                pngImage[oppoiste] = Math.round(
+                    (housing[oppoiste] / housing[key]) * value
+                );
         },
         async saveAsPNG() {
             this.pngSaving = true;
-            const img = document.createElement("img"),
-                svg = await replaceAsync(
+            const { width, height } = this.pngImage,
+                img = document.createElement("img"),
+                replacer = (match, href) => {
+                    const img = document.createElement("img"),
+                        canvas = document.createElement("canvas"),
+                        p = new Promise(resolve =>
+                            img.addEventListener("load", () => {
+                                canvas.width = img.width;
+                                canvas.height = img.height;
+                                canvas.getContext("2d").drawImage(img, 0, 0);
+                                resolve(
+                                    `xlink:href="${canvas.toDataURL(
+                                        "image/png"
+                                    )}"`
+                                );
+                            })
+                        );
+                    img.src = href;
+                    return p;
+                },
+                svg = await Promise.resolve(
                     new XMLSerializer().serializeToString(
                         this.$slots.sign[0].componentInstance.$el
-                    ),
-                    /xlink:href="(.*?)"/g,
-                    (match, href) => {
-                        const img = document.createElement("img"),
-                            canvas = document.createElement("canvas"),
-                            p = new Promise(resolve =>
-                                img.addEventListener("load", () => {
-                                    canvas.width = img.width;
-                                    canvas.height = img.height;
-                                    canvas
-                                        .getContext("2d")
-                                        .drawImage(img, 0, 0);
-                                    resolve(
-                                        `xlink:href="${canvas.toDataURL(
-                                            "image/png"
-                                        )}"`
-                                    );
-                                })
-                            );
-                        img.src = href;
-                        return p;
-                    }
+                    )
+                ).then(
+                    async svg =>
+                        await replaceAsync(svg, /xlink:href="(.*?)"/g, replacer)
                 );
             img.addEventListener("load", () => {
                 const canvas = document.createElement("canvas"),
                     a = document.createElement("a");
-                canvas.width = img.width;
-                canvas.height = img.height;
-                canvas.getContext("2d").drawImage(img, 0, 0);
+                canvas.width = width;
+                canvas.height = height;
+                canvas.getContext("2d").drawImage(img, 0, 0, width, height);
                 a.download = "駅名標";
                 a.href = canvas.toDataURL("image/png");
                 a.click();
