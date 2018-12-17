@@ -165,13 +165,31 @@ export default {
                 );
             img.addEventListener("load", () => {
                 const canvas = document.createElement("canvas"),
-                    a = document.createElement("a");
+                    a = document.createElement("a"),
+                    mouseEvent = document.createEvent("MouseEvents");
                 canvas.width = width;
                 canvas.height = height;
                 canvas.getContext("2d").drawImage(img, 0, 0, width, height);
                 a.download = "駅名標";
                 a.href = canvas.toDataURL("image/png");
-                a.click();
+                mouseEvent.initMouseEvent(
+                    "click",
+                    true,
+                    true,
+                    window,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    false,
+                    false,
+                    false,
+                    false,
+                    0,
+                    a
+                );
+                a.dispatchEvent(mouseEvent);
                 this.pngSaving = false;
                 this.pngDialog = false;
             });
