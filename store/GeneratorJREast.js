@@ -15,6 +15,33 @@ export const state = () => ({
         engligh: "",
         chinese: "",
         korean: ""
+    },
+    stationName: {
+        japanese: "品川",
+        english: "Shinagawa",
+        kana: "しながわ",
+        chinese: "品川",
+        korean: "시나가와",
+        tlc: "SGW",
+        numberings: [{ number: "JY25", color: "#B2CC36" }]
+    },
+    leftStation1: {
+        go: true,
+        directionColor: "#008803"
+    },
+    leftStation2: {
+        enable: false,
+        go: true,
+        directionColor: "#008803"
+    },
+    rightStation1: {
+        go: true,
+        directionColor: "#008803"
+    },
+    rightStation2: {
+        enable: false,
+        go: true,
+        directionColor: "#008803"
     }
 });
 

@@ -7,7 +7,7 @@
             v-for="(component, i) in cards"
             :key="i"
             xs12
-            md6>
+            lg6>
             <component :is="component"/>
         </v-flex>
     </SignGenerator>

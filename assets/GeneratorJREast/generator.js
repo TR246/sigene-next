@@ -42,9 +42,17 @@ const getPanelArea = state => {
 
 export default state => {
     const svgArray = [],
-        { housing } = state,
+        {
+            housing,
+            leftStation1,
+            leftStation2,
+            rightStation1,
+            rightStation2
+        } = state,
         panelArea = getPanelArea(state),
-        constHousing = constants.housing[housing.type];
+        constHousing = constants.housing[housing.type],
+        vw = v => panelArea.width * (v / 100),
+        vh = v => panelArea.height * (v / 100);
 
     // SE型のみ
     if (housing.type === "se-led") {
@@ -396,6 +404,46 @@ export default state => {
             width: panelArea.width,
             height: panelArea.height,
             fill: constHousing.panelBackground
+        });
+    }
+
+    // 内容
+    if (state.useNumbering) {
+        svgArray.push({
+            type: "image",
+            image: require("~/assets/sign_jre.png"),
+            x: 0,
+            y: 0,
+            width: housing.width,
+            height: housing.height
+        });
+    }
+
+    // 左帯
+    if (leftStation2.enable) {
+        // 分岐
+    } else {
+        // 直線
+        svgArray.push({
+            type: "path",
+            d: leftStation1.go
+                ? // 尖る
+                  [
+                      { x: vw(50), y: vh(56) },
+                      { x: 65 + vh(20) },
+                      { x: 65, y: vh(66) },
+                      { x: 65 + vh(20), y: vh(76) },
+                      { x: vw(50) }
+                  ]
+                : // 尖らない
+                  [
+                      { x: vw(50), y: vh(56) },
+                      { x: 0 },
+                      { y: vh(76) },
+                      { x: vw(50) }
+                  ],
+            transform: `translate(${panelArea.x} ${panelArea.y})`,
+            fill: leftStation1.directionColor
         });
     }
 
