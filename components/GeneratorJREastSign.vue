@@ -1,30 +1,18 @@
-<template>
-    <SVGWrapper
-        :width="housing.width"
-        :height="housing.height"
-        :contents="contents"
-        class="svg"/>
-</template>
-
 <script>
-import SVGWrapper from "~/components/SVGWrapper.js";
+import generator from "~/assets/GeneratorJREast/generator.js";
+import generatorParser from "~/assets/generatorParser.js";
 
 export default {
     name: "GeneratorJREastSign",
-    components: { SVGWrapper },
-    computed: {
-        contents() {
-            return this.$store.getters["GeneratorJREast/contents"];
-        },
-        housing() {
-            return this.$store.state.GeneratorJREast.housing;
-        }
+    render(createElement) {
+        const store = this.$store.state.GeneratorJREast;
+        return generatorParser(createElement, generator(store), store.housing);
     }
 };
 </script>
 
 <style lang="scss" scoped>
-.svg {
+svg {
     width: 100%;
     height: 100%;
     object-fit: contain;
