@@ -197,215 +197,45 @@ export default function*(state) {
         yield {
             type: "rect",
             ...panelArea,
-            fill: constHousing.panelBackground
-        };
-    }
-    /*if (housing.type === "se-led") {
-        // 枠
-        yield {
-            type: "rect",
-            x: 0,
-            y: 0,
-            width: housing.width,
-            height: housing.height,
-            fill: constHousing.frameColor
-        };
-        yield {
-            type: "rect",
-            x: 5,
-            y: 5,
-            width: housing.width - 10,
-            height: housing.height - 10,
-            "stroke-width": 3,
-            stroke: constHousing.frameDarkColor
-        };
-        yield {
-            type: "rect",
-            x: 5,
-            y: 20,
-            width: housing.width - 10,
-            height: 60,
-            fill: constHousing.frameColor
-        };
-        yield {
-            type: "rect",
-            x: 5,
-            y: 79,
-            width: housing.width - 10,
-            height: 6,
-            fill: {
-                type: "linearGradient",
-                from: { x: 0, y: 79 },
-                to: { x: 0, y: 85 },
-                stops: [
-                    {
-                        offset: 0.2,
-                        color: constHousing.frameDarkColor,
-                        opacity: 0.8
-                    },
-                    {
-                        offset: 1,
-                        color: constHousing.frameDarkColor,
-                        opacity: 0
-                    }
+            fill:
+                constHousing[
+                    housing.lighting
+                        ? "panelLightBackground"
+                        : "panelBackground"
                 ]
-            }
-        };
-        yield {
-            type: "rect",
-            x: 5,
-            y: housing.height - 35,
-            width: housing.width - 10,
-            height: 6,
-            fill: {
-                type: "linearGradient",
-                from: { x: 0, y: housing.height - 35 },
-                to: { x: 0, y: housing.height - 29 },
-                stops: [
-                    {
-                        offset: 0,
-                        color: constHousing.frameDarkColor,
-                        opacity: 0
-                    },
-                    {
-                        offset: 0.8,
-                        color: constHousing.frameDarkColor,
-                        opacity: 0.8
-                    }
-                ]
-            }
-        };
-        yield {
-            type: "rect",
-            x: 8,
-            y: housing.height - 16,
-            width: housing.width - 16,
-            height: 8,
-            fill: constHousing.frameDarkColor
         };
 
-        // ステッカー
-        const stickers = housing.stickers.split(",");
-        if (stickers.includes("ro-ene"))
-            yield {
-                type: "image",
-                x: panelArea.x + panelArea.width - 25,
-                y: 6,
-                width: 25,
-                height: 70,
-                image: images["ro-ene"],
-                opacity: 0.8
-            };
-        if (stickers.includes("emo-train-kankyo-led"))
-            yield {
-                type: "image",
-                x: panelArea.x,
-                y: 10,
-                width: 305,
-                height: 65,
-                image: images["emo-train-kankyo-led"],
-                opacity: 0.8
-            };
-        if (stickers.includes("kankyo-led"))
-            yield {
-                type: "image",
-                x: panelArea.x,
-                y: 8,
-                width: 250,
-                height: 65,
-                image: images["kankyo-led"],
-                opacity: 0.8
-            };
-        if (stickers.includes("shin-insha"))
-            yield {
-                type: "image",
-                x: panelArea.x + panelArea.width - 35,
-                y: panelArea.y + panelArea.height + 2,
-                width: 35,
-                height: 10,
-                image: images["shin-insha"],
-                opacity: 0.8
-            };
-
-        // 表示パネル
-        yield {
-            type: "rect",
-            x: panelArea.x,
-            y: panelArea.y,
-            width: panelArea.width,
-            height: panelArea.height,
-            fill: housing.lighting ? "#999" : constHousing.panelBackground
-        };
-
-        // 点灯状態の光
+        // 光
         if (housing.lighting) {
-            light = yield {
+            yield {
                 type: "g",
                 children: [
                     {
                         type: "rect",
-                        x: panelArea.x + 10,
-                        y: panelArea.y + 10,
-                        width: panelArea.width - 20,
-                        height: panelArea.height - 20,
-                        fill: "#F0F0FF",
-                        opacity: 0.6,
-                        blur: 10
+                        ...panelArea,
+                        "stroke-width": 15,
+                        stroke: "#808080",
+                        opacity: 0.7,
+                        blur: 15
                     },
                     {
                         type: "rect",
-                        x: panelArea.x + 10,
-                        y: panelArea.y + 10,
-                        width: panelArea.width - 20,
-                        height: panelArea.height - 20,
+                        ...panelArea,
                         fill: {
-                            type: "linearGradient",
-                            from: { x: 0, y: panelArea.y + 10 },
-                            to: {
-                                x: 0,
-                                y: panelArea.y + panelArea.height - 10
-                            },
+                            type: "radialGradient",
+                            gradientUnits: "objectBoundingBox",
+                            center: { x: 0.5, y: 0 },
+                            radius: 1,
                             stops: [
-                                {
-                                    offset: 0.5,
-                                    color: "#F0F0FF",
-                                    opacity: 0.8
-                                },
-                                {
-                                    offset: 1,
-                                    color: "#F0F0FF",
-                                    opacity: 0
-                                }
+                                { offset: 0.3, color: "#000", opacity: 0 },
+                                { offset: 1, color: "#000", opacity: 0.2 }
                             ]
-                        },
-                        blur: 10
-                    },
-                    {
-                        type: "path",
-                        d: [
-                            { x: panelArea.x + 20, y: panelArea.y + 20 },
-                            {
-                                x: panelArea.x + 300,
-                                y: panelArea.y + panelArea.height * 0.8
-                            },
-                            {
-                                x: panelArea.x + panelArea.width - 300,
-                                y: panelArea.y + panelArea.height * 0.8
-                            },
-                            {
-                                x: panelArea.x + panelArea.width - 20,
-                                y: panelArea.y + 20
-                            },
-                            { close: true }
-                        ],
-                        fill: "#F0F0FF",
-                        opacity: 0.5,
-                        blur: 20
+                        }
                     }
                 ]
             };
         }
-    }*/
+    }
 
     // B形のみ
     else if (housing.type === "b-fl") {
