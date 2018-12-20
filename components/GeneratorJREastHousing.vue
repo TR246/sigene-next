@@ -88,6 +88,7 @@
                                 <v-select
                                     :items="housingStickersSE"
                                     :value="housing.stickers"
+                                    multiple
                                     label="筐体のステッカー"
                                     @change="change('stickers', $event)"/>
                             </v-flex>
@@ -148,20 +149,9 @@ export default {
         preset: "SE-6",
         housingStickersSE: [
             { text: "新陰社(新陽社) のみ", value: "shin-insha" },
-            {
-                text: "新陰社(新陽社) + 環境にやさしいLED",
-                value: "shin-insha,kankyo-led"
-            },
-            {
-                text:
-                    "新陰社(新陽社) + 環境にやさしいLED + 浪エネ大賞(省エネ大賞)",
-                value: "shin-insha,kankyo-led,ro-ene"
-            },
-            {
-                text:
-                    "新陰社(新陽社) + [emotrain(ecotrain)]環境にやさしいLED + 浪エネ大賞(省エネ大賞)",
-                value: "shin-insha,emo-train-kankyo-led,ro-ene"
-            }
+            { text: "emotrain(ecotrain)", value: "emo-train" },
+            { text: "環境にやさしいLED", value: "kankyo-led" },
+            { text: "浪エネ大賞(省エネ大賞)", value: "ro-ene" }
         ]
     }),
     computed: {

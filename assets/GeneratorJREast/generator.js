@@ -162,6 +162,37 @@ export default function*(state) {
             }
         ];
 
+        // 筐体ステッカー
+        if (housing.stickers.includes("shin-insha"))
+            yield {
+                type: "image",
+                image: images["shin-insha"],
+                x: panelArea.x + panelArea.width - 35,
+                y: panelArea.y + panelArea.height + 2,
+                height: 10,
+                opacity: 0.8
+            };
+        if (housing.stickers.includes("ro-ene"))
+            yield {
+                type: "image",
+                image: images["ro-ene"],
+                x: panelArea.x + panelArea.width - 25,
+                y: 8,
+                height: 65,
+                opacity: 0.8
+            };
+        if (housing.stickers.includes("kankyo-led")) {
+            const emo = housing.stickers.includes("emo-train");
+            yield {
+                type: "image",
+                x: panelArea.x,
+                y: 10,
+                height: 60,
+                image: images[emo ? "emo-train-kankyo-led" : "kankyo-led"],
+                opacity: 0.8
+            };
+        }
+
         // パネル
         yield {
             type: "rect",
