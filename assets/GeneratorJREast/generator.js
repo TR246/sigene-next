@@ -53,8 +53,6 @@ export default function*(state) {
         vw = v => panelArea.width * (v / 100),
         vh = v => panelArea.height * (v / 100);
 
-    let light = null;
-
     // SE型のみ
     if (housing.type === "se-led") {
         // 枠
@@ -204,41 +202,97 @@ export default function*(state) {
                         : "panelBackground"
                 ]
         };
+    }
 
-        // 光
-        if (housing.lighting) {
-            yield {
-                type: "g",
-                children: [
-                    {
-                        type: "rect",
-                        ...panelArea,
-                        "stroke-width": 15,
-                        stroke: "#808080",
-                        opacity: 0.7,
-                        blur: 15
-                    },
-                    {
-                        type: "rect",
-                        ...panelArea,
-                        fill: {
-                            type: "radialGradient",
-                            gradientUnits: "objectBoundingBox",
-                            center: { x: 0.5, y: 0 },
-                            radius: 1,
-                            stops: [
-                                { offset: 0.3, color: "#000", opacity: 0 },
-                                { offset: 1, color: "#000", opacity: 0.2 }
-                            ]
-                        }
+    // パネル内容
+    /*yield {
+        type: "image",
+        image: require("~/assets/sjk.png"),
+        x: 0,
+        y: 0,
+        width: housing.width,
+        height: housing.height,
+        opacity: 0.5
+    };*/
+
+    // 帯
+    // 左帯のクリップパス
+    const beltLeftClip = yield {
+        type: "clipPath",
+        children: [
+            {
+                type: "path",
+                d: leftStation1.go
+                    ? // 尖る
+                      [
+                          { x: vw(50), y: vh(56) },
+                          { x: 65 + vh(20) },
+                          { x: 65, y: vh(66) },
+                          { x: 65 + vh(20), y: vh(76) },
+                          { x: vw(50) },
+                          { close: true }
+                      ]
+                    : // 尖らない
+                      [
+                          { x: vw(50), y: vh(56) },
+                          { x: 0 },
+                          { y: vh(76) },
+                          { x: vw(50) },
+                          { close: true }
+                      ]
+            }
+        ]
+    };
+    yield {
+        type: "g",
+        transform: `translate(${panelArea.x} ${panelArea.y})`,
+        children: [
+            {
+                type: "rect",
+                x: 0,
+                y: vh(55),
+                width: vw(50),
+                height: vh(22),
+                fill: leftStation1.directionColor,
+                "clip-path": beltLeftClip
+            }
+        ]
+    };
+
+    // 光
+    if (!housing.lighting) return;
+    if (housing.type === "se-led") {
+        yield {
+            type: "g",
+            children: [
+                {
+                    type: "rect",
+                    ...panelArea,
+                    "stroke-width": 15,
+                    stroke: "#808080",
+                    opacity: 0.7,
+                    blur: 15
+                },
+                {
+                    type: "rect",
+                    ...panelArea,
+                    fill: {
+                        type: "radialGradient",
+                        gradientUnits: "objectBoundingBox",
+                        center: { x: 0.5, y: 0 },
+                        radius: 1,
+                        stops: [
+                            { offset: 0.3, color: "#000", opacity: 0 },
+                            { offset: 1, color: "#000", opacity: 0.2 }
+                        ]
                     }
-                ]
-            };
-        }
+                }
+            ]
+        };
     }
 
     // B形のみ
-    else if (housing.type === "b-fl") {
+    /*else if (housing.type === "b-fl") {
         // 枠
         yield {
             type: "path",
@@ -392,16 +446,7 @@ export default function*(state) {
     }
 
     // 内容
-    if (state.useNumbering) {
-        /*yield {
-            type: "image",
-            image: require("~/assets/sign_jre.png"),
-            x: 0,
-            y: 0,
-            width: housing.width,
-            height: housing.height
-        };*/
-    }
+
 
     // 左帯
     /*if (leftStation2.enable) {
