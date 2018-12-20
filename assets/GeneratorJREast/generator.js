@@ -58,6 +58,119 @@ export default function*(state) {
     // SE型のみ
     if (housing.type === "se-led") {
         // 枠
+        yield* [
+            {
+                type: "rect",
+                x: 0,
+                y: 0,
+                width: housing.width,
+                height: housing.height,
+                fill: constHousing.frameColor
+            },
+            {
+                type: "path",
+                d: [
+                    { x: 4, y: housing.height },
+                    { y: 4 },
+                    { x: housing.width - 4 },
+                    { y: housing.height }
+                ],
+                "stroke-width": 4,
+                stroke: constHousing.frameDarkColor
+            },
+            {
+                type: "rect",
+                x: 4,
+                y: 15,
+                width: 1,
+                height: 65,
+                fill: constHousing.frameColor
+            },
+            {
+                type: "rect",
+                x: housing.width - 4,
+                y: 15,
+                width: 1,
+                height: 65,
+                fill: constHousing.frameColor
+            },
+            {
+                type: "rect",
+                x: 6,
+                y: 78,
+                width: housing.width - 12,
+                height: 2,
+                fill: constHousing.frameDarkColor,
+                opacity: 0.5
+            },
+            {
+                type: "rect",
+                x: 6,
+                y: 80,
+                width: housing.width - 12,
+                height: 2,
+                fill: constHousing.frameLightColor,
+                opacity: 0.5
+            },
+            {
+                type: "rect",
+                x: 6,
+                y: housing.height - 32,
+                width: housing.width - 12,
+                height: 2,
+                fill: constHousing.frameDarkColor,
+                opacity: 0.5
+            },
+            {
+                type: "rect",
+                x: 6,
+                y: housing.height - 30,
+                width: housing.width - 12,
+                height: 2,
+                fill: constHousing.frameLightColor,
+                opacity: 0.5
+            },
+            {
+                type: "rect",
+                x: 10,
+                y: housing.height - 10,
+                width: housing.width - 20,
+                height: 2,
+                fill: constHousing.frameDarkColor,
+                opacity: 0.3
+            },
+            {
+                type: "rect",
+                x: 10,
+                y: housing.height - 8,
+                width: housing.width - 20,
+                height: 2,
+                fill: constHousing.frameLightColor,
+                opacity: 0.3
+            },
+            {
+                type: "path",
+                d: [
+                    { x: 10, y: housing.height },
+                    { y: housing.height - 15 },
+                    { x: housing.width - 10 },
+                    { y: housing.height }
+                ],
+                "stroke-width": 3,
+                stroke: constHousing.frameDarkColor,
+                opacity: 0.5
+            }
+        ];
+
+        // パネル
+        yield {
+            type: "rect",
+            ...panelArea,
+            fill: constHousing.panelBackground
+        };
+    }
+    /*if (housing.type === "se-led") {
+        // 枠
         yield {
             type: "rect",
             x: 0,
@@ -261,7 +374,7 @@ export default function*(state) {
                 ]
             };
         }
-    }
+    }*/
 
     // B形のみ
     else if (housing.type === "b-fl") {

@@ -3,6 +3,7 @@
         "se-led": {
             "frameColor": "#303030",
             "frameDarkColor": "#212121",
+            "frameLightColor": "#505050",
             "panelBackground": "#E0E0E0"
         },
         "b-fl": {
