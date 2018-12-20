@@ -286,6 +286,20 @@ export default function*(state) {
                             { offset: 1, color: "#000", opacity: 0.2 }
                         ]
                     }
+                },
+                {
+                    type: "rect",
+                    ...panelArea,
+                    fill: {
+                        type: "linearGradient",
+                        gradientUnits: "objectBoundingBox",
+                        from: { x: 0, y: 0 },
+                        to: { x: 0, y: 0 },
+                        stops: [
+                            { offset: 0, color: "#000", opacity: 0 },
+                            { offset: 1, color: "#000", opacity: 0.1 }
+                        ]
+                    }
                 }
             ]
         };
