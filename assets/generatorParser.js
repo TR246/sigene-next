@@ -107,8 +107,12 @@ const pathArrayToStr = array =>
 
         let newArg = null;
 
-        // グループまたはクリップパス
-        if (item.type === "g" || item.type === "clipPath") {
+        // グループまたはクリップパスまたはマスク
+        if (
+            item.type === "g" ||
+            item.type === "clipPath" ||
+            item.type === "mask"
+        ) {
             const childTree = parseIterator(
                 { createElement },
                 item.children[Symbol.iterator]()
@@ -117,17 +121,19 @@ const pathArrayToStr = array =>
             children.push(...childTree.items);
         }
 
-        // 一回限りのクリップパス
-        if (item.clipPath) {
-            const clipPath = parseIterator(
+        // 一回限りのクリップパスまたはマスク
+        if (item.clipPath || item.mask) {
+            const key = item.clipPath ? "clipPath" : "mask",
+                result = parseIterator(
                     { createElement },
-                    item.clipPath[Symbol.iterator]()
+                    item[key][Symbol.iterator]()
                 ),
                 id = createId();
             defs.push(
-                ...clipPath.defs,
-                createElement("clipPath", { attrs: { id } }, clipPath.items)
+                ...result.defs,
+                createElement(key, { attrs: { id } }, result.items)
             );
+            attrs[key] = `url(#${id})`;
         }
 
         // パス
