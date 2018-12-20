@@ -107,14 +107,27 @@ const pathArrayToStr = array =>
 
         let newArg = null;
 
-        // グループ
-        if (item.type === "g") {
+        // グループまたはクリップパス
+        if (item.type === "g" || item.type === "clipPath") {
             const childTree = parseIterator(
                 { createElement },
                 item.children[Symbol.iterator]()
             );
             defs.push(...childTree.defs);
             children.push(...childTree.items);
+        }
+
+        // 一回限りのクリップパス
+        if (item.clipPath) {
+            const clipPath = parseIterator(
+                    { createElement },
+                    item.clipPath[Symbol.iterator]()
+                ),
+                id = createId();
+            defs.push(
+                ...clipPath.defs,
+                createElement("clipPath", { attrs: { id } }, clipPath.items)
+            );
         }
 
         // パス
@@ -147,10 +160,15 @@ const pathArrayToStr = array =>
             });
 
         // 参照の要求
-        if (item.requireReference) newArg = attrs.id = createId();
+        if (
+            item.type === "clipPath" ||
+            item.isDefinition ||
+            item.requireReference
+        )
+            newArg = attrs.id = createId();
 
         const el = createElement(item.type, { attrs }, children);
-        if (item.isDefinition) defs.push(el);
+        if (item.type === "clipPath" || item.isDefinition) defs.push(el);
         else items.push(el);
 
         return parseIterator(newContext, iterator, newArg);
