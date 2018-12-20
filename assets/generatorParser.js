@@ -103,6 +103,7 @@ const pathArrayToStr = array =>
 
         delete attrs.type;
         delete attrs.image;
+        delete attrs.children;
 
         let newArg = null;
 
