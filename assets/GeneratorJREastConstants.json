@@ -10,7 +10,12 @@
         "b-fl": {
             "frameColor": "#303030",
             "frameDarkColor": "#212121",
-            "panelBackground": "#E0E0E0"
+            "panelBackground": "#E0E0E0",
+            "panelLusterBackground": "#F0F0F0",
+            "panelShadowBackground": "#C0C0C0",
+            "panelLightBackground": "#EEEEE0",
+            "panelLightLusterBackground": "#FFFFF0",
+            "panelLightShadowBackground": "#CCCCC0"
         },
         "non-light": {
             "frameColor": "#303030",
