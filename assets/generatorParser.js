@@ -164,8 +164,10 @@ const pathArrayToStr = array =>
             item.type === "clipPath" ||
             item.isDefinition ||
             item.requireReference
-        )
-            newArg = attrs.id = createId();
+        ) {
+            attrs.id = createId();
+            newArg = `url(#${attrs.id})`;
+        }
 
         const el = createElement(item.type, { attrs }, children);
         if (item.type === "clipPath" || item.isDefinition) defs.push(el);
