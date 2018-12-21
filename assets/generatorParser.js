@@ -19,7 +19,7 @@ const pathArrayToStr = array =>
                 else if (!isInX && isInY) return `V ${node.y}`;
                 else return `L ${node.x} ${node.y}`;
             })
-            .join(","),
+            .join(" "),
     objectToDocument = (
         { createElement },
         { name, attrs = {}, children = [] }
@@ -103,12 +103,12 @@ const pathArrayToStr = array =>
             isDef =
                 item.type === "clipPath" ||
                 item.type === "mask" ||
-                item.isDefinition ||
-                item.requireReference;
+                item.isDefinition;
 
         delete attrs.type;
         delete attrs.image;
         delete attrs.children;
+        delete attrs.clipPath;
 
         let newArg = null;
 
@@ -127,7 +127,10 @@ const pathArrayToStr = array =>
         }
 
         // 一回限りのクリップパスまたはマスク
-        if (item.clipPath || item.mask) {
+        if (
+            typeof item.clipPath === "object" ||
+            typeof item.mask === "object"
+        ) {
             const key = item.clipPath ? "clipPath" : "mask",
                 result = parseIterator(
                     { createElement },
@@ -138,7 +141,7 @@ const pathArrayToStr = array =>
                 ...result.defs,
                 createElement(key, { attrs: { id } }, result.items)
             );
-            attrs[key] = `url(#${id})`;
+            attrs[item.clipPath ? "clip-path" : "mask"] = `url(#${id})`;
         }
 
         // パス
@@ -148,8 +151,10 @@ const pathArrayToStr = array =>
         if (item.type === "image") attrs["xlink:href"] = item.image;
 
         // フィルとストローク
-        if (!isDef && item.type !== "g" && !item.fill) attrs.fill = "none";
-        if (!isDef && item.type !== "g" && !item.stroke) attrs.stroke = "none";
+        if (!isDef && item.type !== "g") {
+            if (!item.fill) attrs.fill = "none";
+            if (!item.stroke) attrs.stroke = "none";
+        }
         if (typeof item.fill === "object")
             attrs.fill = createGradient(newContext, item.fill);
         if (typeof item.stroke === "object")
@@ -171,7 +176,7 @@ const pathArrayToStr = array =>
             });
 
         // 参照の要求
-        if (isDef) {
+        if (isDef || item.requireReference) {
             attrs.id = createId();
             newArg = `url(#${attrs.id})`;
         }
