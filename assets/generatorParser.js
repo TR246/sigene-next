@@ -99,7 +99,12 @@ const pathArrayToStr = array =>
         if (done) return { defs, items };
 
         const attrs = { ...item },
-            children = [];
+            children = [],
+            isDef =
+                item.type === "clipPath" ||
+                item.type === "mask" ||
+                item.isDefinition ||
+                item.requireReference;
 
         delete attrs.type;
         delete attrs.image;
@@ -143,8 +148,8 @@ const pathArrayToStr = array =>
         if (item.type === "image") attrs["xlink:href"] = item.image;
 
         // フィルとストローク
-        if (!item.fill) attrs.fill = "none";
-        if (!item.stroke) attrs.stroke = "none";
+        if (!isDef && item.type !== "g" && !item.fill) attrs.fill = "none";
+        if (!isDef && item.type !== "g" && !item.stroke) attrs.stroke = "none";
         if (typeof item.fill === "object")
             attrs.fill = createGradient(newContext, item.fill);
         if (typeof item.stroke === "object")
@@ -166,17 +171,18 @@ const pathArrayToStr = array =>
             });
 
         // 参照の要求
-        if (
-            item.type === "clipPath" ||
-            item.isDefinition ||
-            item.requireReference
-        ) {
+        if (isDef) {
             attrs.id = createId();
             newArg = `url(#${attrs.id})`;
         }
 
         const el = createElement(item.type, { attrs }, children);
-        if (item.type === "clipPath" || item.isDefinition) defs.push(el);
+        if (
+            item.type === "clipPath" ||
+            item.type === "mask" ||
+            item.isDefinition
+        )
+            defs.push(el);
         else items.push(el);
 
         return parseIterator(newContext, iterator, newArg);
