@@ -165,6 +165,7 @@ export default function*(state) {
                 image: images["shin-insha"],
                 x: panelArea.x + panelArea.width - 35,
                 y: panelArea.y + panelArea.height + 2,
+                width: 35,
                 height: 10,
                 opacity: 0.8
             };
@@ -174,6 +175,7 @@ export default function*(state) {
                 image: images["ro-ene"],
                 x: panelArea.x + panelArea.width - 25,
                 y: 8,
+                width: 23.2,
                 height: 65,
                 opacity: 0.8
             };
@@ -183,6 +185,7 @@ export default function*(state) {
                 type: "image",
                 x: panelArea.x,
                 y: 10,
+                width: emo ? 281.5 : 230.7,
                 height: 60,
                 image: images[emo ? "emo-train-kankyo-led" : "kankyo-led"],
                 opacity: 0.8
@@ -354,41 +357,55 @@ export default function*(state) {
     }
 
     // パネル内容
-    /*yield {
-        type: "image",
-        image: require("~/assets/sjk.png"),
-        x: 0,
-        y: 0,
-        width: housing.width,
-        height: housing.height,
-        opacity: 0.5
-    };*/
 
     // 帯
     // 左帯のクリップパス
+    let beltLeftPath;
+    if (leftStation2.enable) {
+        // 分岐するクリップパス
+        beltLeftPath = [{ x: vh(126) }, { x: vh(113), y: vh(43) }]
+            .concat(
+                leftStation1.go
+                    ? [
+                          { x: vh(26) },
+                          { x: vh(10), y: vh(51) },
+                          { x: vh(26), y: vh(59) }
+                      ]
+                    : [{ x: 0 }, { y: vh(59) }]
+            )
+            .concat([
+                { x: vh(107) },
+                { x: vh(114), y: vh(66) },
+                { x: vh(107), y: vh(73) }
+            ])
+            .concat(
+                leftStation2.go
+                    ? [
+                          { x: vh(26) },
+                          { x: vh(10), y: vh(81) },
+                          { x: vh(26), y: vh(89) }
+                      ]
+                    : [{ x: 0 }, { y: vh(89) }]
+            )
+            .concat([{ x: vh(113) }, { x: vh(126), y: vh(76) }]);
+    } else {
+        // 分岐しないクリップパス
+        beltLeftPath = leftStation1.go
+            ? [
+                  { x: vh(33) },
+                  { x: vh(13), y: vh(66) },
+                  { x: vh(33), y: vh(76) }
+              ]
+            : [{ x: 0 }, { y: vh(76) }];
+    }
     const beltLeftClip = yield {
         type: "clipPath",
         children: [
             {
                 type: "path",
-                d: leftStation1.go
-                    ? // 尖る
-                      [
-                          { x: vw(50), y: vh(56) },
-                          { x: 65 + vh(20) },
-                          { x: 65, y: vh(66) },
-                          { x: 65 + vh(20), y: vh(76) },
-                          { x: vw(50) },
-                          { close: true }
-                      ]
-                    : // 尖らない
-                      [
-                          { x: vw(50), y: vh(56) },
-                          { x: 0 },
-                          { y: vh(76) },
-                          { x: vw(50) },
-                          { close: true }
-                      ]
+                d: [{ x: vw(50), y: vh(56) }]
+                    .concat(beltLeftPath)
+                    .concat([{ x: vw(50) }, { close: true }])
             }
         ]
     };
@@ -399,14 +416,24 @@ export default function*(state) {
             {
                 type: "rect",
                 x: 0,
-                y: vh(55),
+                y: leftStation2.enable ? vh(42) : vh(55),
                 width: vw(50),
-                height: vh(22),
+                height: vh(45),
                 fill: leftStation1.directionColor,
                 "clip-path": beltLeftClip
             }
         ]
     };
+
+    /*yield {
+        type: "image",
+        image: require("~/assets/sjk.png"),
+        x: 0,
+        y: 0,
+        width: housing.width,
+        height: housing.height,
+        opacity: 0.5
+    };*/
 
     // 光
     if (!housing.lighting) return;
