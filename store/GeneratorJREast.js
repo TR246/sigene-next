@@ -27,21 +27,41 @@ export const state = () => ({
     },
     leftStation1: {
         go: true,
-        directionColor: "#008803"
+        directionColor: "#008803",
+        name: {
+            japanese: "高輪ゲートウェイ",
+            english: "Takanawa-Gateway"
+        },
+        numberings: [{ number: "JY26", color: "#B2CC36" }]
     },
     leftStation2: {
         enable: false,
         go: true,
-        directionColor: "#008803"
+        directionColor: "#008803",
+        name: {
+            japanese: "田町",
+            english: "Tamachi"
+        },
+        numberings: [{ number: "JY27", color: "#B2CC36" }]
     },
     rightStation1: {
         go: true,
-        directionColor: "#008803"
+        directionColor: "#008803",
+        name: {
+            japanese: "大崎",
+            english: "Ōsaki"
+        },
+        numberings: [{ number: "JY24", color: "#B2CC36" }]
     },
     rightStation2: {
         enable: false,
         go: true,
-        directionColor: "#008803"
+        directionColor: "#008803",
+        name: {
+            japanese: "大井町",
+            english: "Ōimachi"
+        },
+        numberings: [{ number: "JK19", color: "#1DAED1" }]
     }
 });
 
