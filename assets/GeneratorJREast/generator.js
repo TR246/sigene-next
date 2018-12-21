@@ -43,6 +43,7 @@ const getPanelArea = state => {
 export default function*(state) {
     const {
             housing,
+            stationName,
             leftStation1,
             leftStation2,
             rightStation1,
@@ -409,6 +410,7 @@ export default function*(state) {
 
     // 帯
     const belt = [];
+    // 左上
     belt.push({
         type: "rect",
         x: 0,
@@ -417,6 +419,7 @@ export default function*(state) {
         height: vh(26),
         fill: leftStation1.directionColor
     });
+    // 左下
     if (leftStation2.enable)
         belt.push({
             type: "rect",
@@ -426,6 +429,7 @@ export default function*(state) {
             height: vh(26),
             fill: leftStation2.directionColor
         });
+    // 右上
     belt.push({
         type: "rect",
         x: vw(50),
@@ -434,6 +438,7 @@ export default function*(state) {
         height: vh(26),
         fill: rightStation1.directionColor
     });
+    // 右下
     if (rightStation2.enable)
         belt.push({
             type: "rect",
@@ -443,6 +448,17 @@ export default function*(state) {
             height: vh(26),
             fill: rightStation2.directionColor
         });
+    // ラインカラー
+    belt.push(
+        ...stationName.lineColors.map((color, i, { length }) => ({
+            type: "rect",
+            x: vw(50) - vh(10),
+            y: vh(56 + (i / length) * 20),
+            width: vh(20),
+            height: vh(20),
+            fill: color
+        }))
+    );
     yield {
         type: "g",
         children: belt,

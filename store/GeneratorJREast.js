@@ -23,7 +23,8 @@ export const state = () => ({
         chinese: "品川",
         korean: "시나가와",
         tlc: "SGW",
-        numberings: [{ number: "JY25", color: "#B2CC36" }]
+        numberings: [{ number: "JY25", color: "#B2CC36" }],
+        lineColors: ["#B2CC36"]
     },
     leftStation1: {
         go: true,
