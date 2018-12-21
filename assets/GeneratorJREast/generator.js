@@ -358,75 +358,113 @@ export default function*(state) {
 
     // パネル内容
 
+    // 帯のクリップパス
+    const createBeltClip = (branch, go1, go2, reverse) => {
+        let path;
+        if (branch) {
+            // 分岐するクリップパス
+            path = [
+                { x: vh(126), y: vh(56) },
+                { x: vh(113), y: vh(43) },
+                ...(go1
+                    ? [
+                          { x: vh(26), y: vh(43) },
+                          { x: vh(10), y: vh(51) },
+                          { x: vh(26), y: vh(59) }
+                      ]
+                    : [{ x: 0, y: vh(43) }, { x: 0, y: vh(59) }]),
+                { x: vh(107), y: vh(59) },
+                { x: vh(114), y: vh(66) },
+                { x: vh(107), y: vh(73) },
+                ...(go2
+                    ? [
+                          { x: vh(26), y: vh(73) },
+                          { x: vh(10), y: vh(81) },
+                          { x: vh(26), y: vh(89) }
+                      ]
+                    : [{ x: 0, y: vh(73) }, { x: 0, y: vh(89) }]),
+                { x: vh(113), y: vh(89) },
+                { x: vh(126), y: vh(76) }
+            ];
+        } else {
+            // 分岐しないクリップパス
+            path = go1
+                ? [
+                      { x: vh(33), y: vh(56) },
+                      { x: vh(13), y: vh(66) },
+                      { x: vh(33), y: vh(76) }
+                  ]
+                : [{ x: 0, y: vh(56) }, { x: 0, y: vh(76) }];
+        }
+        if (reverse) {
+            path = path
+                .map(({ x, y }) => ({
+                    x: panelArea.width - x,
+                    y
+                }))
+                .reverse();
+        }
+        return path;
+    };
+
     // 帯
-    // 左帯のクリップパス
-    let beltLeftPath;
-    if (leftStation2.enable) {
-        // 分岐するクリップパス
-        beltLeftPath = [
-            { x: vh(126) },
-            { x: vh(113), y: vh(43) },
-            ...(leftStation1.go
-                ? [
-                      { x: vh(26) },
-                      { x: vh(10), y: vh(51) },
-                      { x: vh(26), y: vh(59) }
-                  ]
-                : [{ x: 0 }, { y: vh(59) }]),
-            { x: vh(107) },
-            { x: vh(114), y: vh(66) },
-            { x: vh(107), y: vh(73) },
-            ...(leftStation2.go
-                ? [
-                      { x: vh(26) },
-                      { x: vh(10), y: vh(81) },
-                      { x: vh(26), y: vh(89) }
-                  ]
-                : [{ x: 0 }, { y: vh(89) }]),
-            { x: vh(113) },
-            { x: vh(126), y: vh(76) }
-        ];
-    } else {
-        // 分岐しないクリップパス
-        beltLeftPath = leftStation1.go
-            ? [
-                  { x: vh(33) },
-                  { x: vh(13), y: vh(66) },
-                  { x: vh(33), y: vh(76) }
-              ]
-            : [{ x: 0 }, { y: vh(76) }];
-    }
-    /*const beltLeftClip = yield {
-        type: "clipPath",
-        children: [
-            {
-                type: "path",
-                d: [{ x: vw(50), y: vh(56) }]
-                    .concat(beltLeftPath)
-                    .concat([{ x: vw(50) }, { close: true }])
-            }
-        ]
-    };*/
+    const belt = [];
+    belt.push({
+        type: "rect",
+        x: 0,
+        y: leftStation2.enable ? vh(42) : vh(55),
+        width: vw(51),
+        height: vh(26),
+        fill: leftStation1.directionColor
+    });
+    if (leftStation2.enable)
+        belt.push({
+            type: "rect",
+            x: 0,
+            y: vh(66),
+            width: vw(51),
+            height: vh(26),
+            fill: leftStation2.directionColor
+        });
+    belt.push({
+        type: "rect",
+        x: vw(50),
+        y: rightStation2.enable ? vh(42) : vh(55),
+        width: vw(50),
+        height: vh(26),
+        fill: rightStation1.directionColor
+    });
+    if (rightStation2.enable)
+        belt.push({
+            type: "rect",
+            x: vw(50),
+            y: vh(66),
+            width: vw(50),
+            height: vh(26),
+            fill: rightStation2.directionColor
+        });
     yield {
         type: "g",
-        children: [
-            {
-                type: "rect",
-                x: 0,
-                y: leftStation2.enable ? vh(42) : vh(55),
-                width: vw(50),
-                height: vh(45),
-                fill: leftStation1.directionColor
-            }
-        ],
+        children: belt,
         transform: `translate(${panelArea.x} ${panelArea.y})`,
         clipPath: [
             {
                 type: "path",
                 d: [
                     { x: vw(50), y: vh(56) },
-                    ...beltLeftPath,
-                    { x: vw(50) },
+                    ...createBeltClip(
+                        leftStation2.enable,
+                        leftStation1.go,
+                        leftStation2.go,
+                        false
+                    ),
+                    { x: vw(50), y: vh(76) },
+                    ...createBeltClip(
+                        rightStation2.enable,
+                        rightStation1.go,
+                        rightStation2.go,
+                        true
+                    ),
                     { close: true }
                 ]
             }
